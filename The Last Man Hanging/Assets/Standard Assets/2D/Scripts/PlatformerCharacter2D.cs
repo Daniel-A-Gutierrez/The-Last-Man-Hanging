@@ -20,7 +20,7 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
         private bool m_JustGrounded = true;
-
+        const float m_PlayerAcceleration = .002f;
         private void Awake()
         {
             // Setting up references.
@@ -83,6 +83,40 @@ namespace UnityStandardAssets._2D
                 m_Anim.SetFloat("Speed", Mathf.Abs(move));
 
                 // Move the character
+                if (move > 0)
+                {
+                    m_Rigidbody2D.velocity = new Vector2(move * (m_Rigidbody2D.velocity.y + m_PlayerAcceleration), m_Rigidbody2D.velocity.y);
+                    if (m_Rigidbody2D.velocity.x > m_MaxSpeed)
+                    {
+                        m_Rigidbody2D.velocity = new Vector2(m_MaxSpeed, m_Rigidbody2D.velocity.y);
+                    }
+                }
+                else if (move < 0)
+                {
+                    m_Rigidbody2D.velocity = new Vector2(move * (m_Rigidbody2D.velocity.x - m_PlayerAcceleration), m_Rigidbody2D.velocity.y);
+                    if (m_Rigidbody2D.velocity.x < -m_MaxSpeed)
+                    {
+                        m_Rigidbody2D.velocity = new Vector2(-m_MaxSpeed, m_Rigidbody2D.velocity.y);
+                    }
+                }
+                else if (move == 0) {
+                    if (m_Rigidbody2D.velocity.x < 0)
+                    {
+                        m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x + m_PlayerAcceleration, m_Rigidbody2D.velocity.y);
+                        if (m_Rigidbody2D.velocity.x >= 0)
+                        {
+                            m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
+                        }
+                    }
+                    else
+                    {
+                        m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x - m_PlayerAcceleration, m_Rigidbody2D.velocity.y);
+                        if (m_Rigidbody2D.velocity.x <= 0)
+                        {
+                            m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
+                        }
+                    }
+                }
                 m_Rigidbody2D.velocity = new Vector2(move*m_MaxSpeed, m_Rigidbody2D.velocity.y);
 
                 // If the input is moving the player right and the player is facing left...
