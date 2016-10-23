@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class grapple_hook : MonoBehaviour
 {
 
@@ -12,7 +13,8 @@ public class grapple_hook : MonoBehaviour
     RaycastHit2D hit;
     public float distance = 10f;
     public LayerMask mask;
-    public float step = 0.02f;
+    public float step = 0.002f;
+    Rigidbody2D m_Rigidbody2D;
 
     // Use this for initialization
     void Start()
@@ -25,9 +27,10 @@ public class grapple_hook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (joint.distance > .5f)
+        {
             joint.distance -= step;
+        }
         else
         {
 
@@ -38,8 +41,6 @@ public class grapple_hook : MonoBehaviour
 
 
         }
-
-
         if (Input.GetKeyDown(KeyCode.E))
         {
             targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -88,5 +89,9 @@ public class grapple_hook : MonoBehaviour
             //line.enabled = false;
         }
 
+    }
+    int Get_Motion_Vector()
+    {
+        return 2;
     }
 }
