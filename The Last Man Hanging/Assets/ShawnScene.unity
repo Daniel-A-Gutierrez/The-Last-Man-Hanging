@@ -875,8 +875,26 @@ MonoBehaviour:
   distance: 16.58
   mask:
     serializedVersion: 2
-    m_Bits: 288
+    m_Bits: 256
   step: 0.5
+--- !u!232 &1600498130
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1600498119}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 4.528664
+  m_MaxDistanceOnly: 0
 --- !u!1001 &1642417591
 Prefab:
   m_ObjectHideFlags: 0
