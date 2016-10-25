@@ -64,7 +64,7 @@ namespace UnityStandardAssets._2D
             {
                 if (Input.GetKeyDown(KeyCode.A))
                 {
-                    m_Rigidbody2D.AddForce(new Vector2(-m_MaxSpeed, 0), impulse);
+                    m_Rigidbody2D.AddForce(new Vector2(-m_MaxSpeed, 0), impulse); //add a small constant force to counteract friction.
                     suspended1 = false;
                 }
                 if ((Input.GetKeyUp(KeyCode.A) & !suspended1 )| suspended2)

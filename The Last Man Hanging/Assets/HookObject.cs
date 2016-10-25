@@ -17,29 +17,34 @@ public class HookObject : MonoBehaviour
     Vector2 hookedPosition;
     public int parentID;
     public string hookID;
+    public float maxDistance;
+    GameObject player;
+    public bool isTensioned;
     void Start ()
     {
 
         RETURN = false;
         
     }
-    public void Throw(Vector2 pos, int ParentID, char LorR) // NOT LOWER CASE THROW
+    public void Throw(GameObject go, char LorR) // NOT LOWER CASE THROW
     {
         isHooked = false;
+        this.maxDistance = go.GetComponent<HardCodedGrapple>().maxRopeLength;
         if (hookSpeed == 0 | hitRadius == 0)
         { 
             hookSpeed = 10f;
             hitRadius = 2f;
         }
-        playerPosition = pos;
-        parentID = ParentID;
+        isTensioned = false;
+        playerPosition = go.transform.position;
+        parentID = go.GetComponent<HardCodedGrapple>().PlayerNumber;
         hookID = "" + parentID + LorR;
-        Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition); //thanks shawn for this function
-        normalizedVelocityFactor = new Vector2(target.x - pos.x, target.y - pos.y);
+        Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition); //thanks shawn for this function
+        normalizedVelocityFactor = new Vector2(target.x - playerPosition.x, target.y - playerPosition.y);
         normalizedVelocityFactor.Normalize();
         transform.position = playerPosition + normalizedVelocityFactor * hitRadius*2;
         GetComponent<Rigidbody2D>().velocity = normalizedVelocityFactor * hookSpeed;
-        
+        player = go;
         //float hypotenuse = Mathf.Sqrt(Mathf.Pow(target.x - transform.position.x, 2) +
         //    Mathf.Pow(target.y - transform.position.y, 2));
         
@@ -53,10 +58,22 @@ public class HookObject : MonoBehaviour
         if (isHooked &!RETURN)
         {
             transform.position = hookedPosition;
-            //isHooked = true;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            GetComponent<Rigidbody2D>().angularVelocity = 0;
+            float distance = Vector2.Distance(playerPosition, transform.position);
+            if (distance >= player.GetComponent<HardCodedGrapple>().slackLength  )
+            {
+                isTensioned = true;
+            }
         }
         else if(!RETURN & !isHooked)
-        { 
+        {
+            float distance = Vector2.Distance(playerPosition, transform.position);
+            if (distance > maxDistance)
+            {
+                RETURN = true;
+
+            }
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, hitRadius, whatIsGrappleable);
             for (int i = 0; i < colliders.Length; i++)
             {
@@ -65,7 +82,7 @@ public class HookObject : MonoBehaviour
                 {
                         if (parentID != null)
                         {
-                            if (colliders[i].gameObject.GetComponent<HardCodedGrapple>() == null)
+                            if (colliders[i].gameObject.GetComponent<HardCodedGrapple>() == null) //FIX THIS
                             {
                                 transform.position = colliders[i].gameObject.transform.position;
                                 Vector2 zero = new Vector2(0, 0);
@@ -76,10 +93,12 @@ public class HookObject : MonoBehaviour
                         }
                  }
             }
+            
         }
         if (RETURN)
         {
             isHooked = false;
+            isTensioned = false;
             normalizedVelocityFactor = new Vector2(playerPosition.x - transform.position.x, playerPosition.y - transform.position.y);
             normalizedVelocityFactor.Normalize();
             GetComponent<Rigidbody2D>().velocity = normalizedVelocityFactor * hookSpeed;

@@ -150,7 +150,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -234,7 +234,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 5000000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: m_GravityScale
-      value: 1.5
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+      propertyPath: m_JumpForce
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+      propertyPath: m_LinearDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+      propertyPath: m_MaxSpeed
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
@@ -248,7 +260,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -8.03
+      value: -14.06
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
       propertyPath: m_LocalPosition.y
@@ -296,7 +308,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 21.587055
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
       propertyPath: m_Layer
@@ -337,8 +349,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cefbef6a8e4f6478461aafa46f0fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slackLength: 0
-  PlayerNumber: 0
+  slackLength: 3
+  PlayerNumber: 1
+  maxRopeLength: 8
   LHookOut: 0
   RHookOut: 0
 --- !u!232 &1574180555
@@ -358,7 +371,7 @@ DistanceJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
   m_Distance: 1.7318488
-  m_MaxDistanceOnly: 0
+  m_MaxDistanceOnly: 1
 --- !u!1001 &1604144580
 Prefab:
   m_ObjectHideFlags: 0
@@ -368,11 +381,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 6.48
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.45
+      value: 6.89
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -412,7 +425,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
       propertyPath: m_LocalScale.x
@@ -421,6 +434,22 @@ Prefab:
     - target: {fileID: 400000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
       propertyPath: m_LocalScale.y
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
+      propertyPath: m_Offset.x
+      value: 0.618
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
+      propertyPath: m_Offset.y
+      value: 0.618
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18fcd494ab71841d695135246693eb3a, type: 2}
