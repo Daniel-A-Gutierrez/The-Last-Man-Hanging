@@ -140,7 +140,11 @@ public class HardCodedGrapple : MonoBehaviour {
 	void Update ()
     {
 
+        if (Input.GetKey(KeyCode.Mouse0)) 
+        {
 
+            print("fl");
+        }
         Vector2 newV = GetComponent<Rigidbody2D>().velocity;
         acceleration = (newV - oldV) / Time.deltaTime;
         oldV = GetComponent<Rigidbody2D>().velocity;
@@ -151,6 +155,7 @@ public class HardCodedGrapple : MonoBehaviour {
             hookL = (GameObject)(Instantiate(Resources.Load("HookPrefab")));
             LHookOut = true;
             hookL.GetComponent<HookObject>().Throw(gameObject, 'L');
+            print("Spawn LHook");
         }
         LMBDepressed = Input.GetKey(KeyCode.Mouse0);
         if(LHookOut)

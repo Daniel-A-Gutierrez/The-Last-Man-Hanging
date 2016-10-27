@@ -42,8 +42,8 @@ public class HookObject : MonoBehaviour
         Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition); //thanks shawn for this function
         normalizedVelocityFactor = new Vector2(target.x - playerPosition.x, target.y - playerPosition.y);
         normalizedVelocityFactor.Normalize();
-        transform.position = playerPosition + normalizedVelocityFactor * hitRadius*2;
-        GetComponent<Rigidbody2D>().velocity = normalizedVelocityFactor * hookSpeed;
+        transform.position = playerPosition + normalizedVelocityFactor*hitRadius + normalizedVelocityFactor*go.GetComponent<BoxCollider2D>().size.magnitude;
+        GetComponent<Rigidbody2D>().velocity = normalizedVelocityFactor * hookSpeed + go.GetComponent<Rigidbody2D>().velocity;
         player = go;
         //float hypotenuse = Mathf.Sqrt(Mathf.Pow(target.x - transform.position.x, 2) +
         //    Mathf.Pow(target.y - transform.position.y, 2));
@@ -77,20 +77,20 @@ public class HookObject : MonoBehaviour
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, hitRadius, whatIsGrappleable);
             for (int i = 0; i < colliders.Length; i++)
             {
-                
-                if (colliders[i].gameObject != gameObject )
+
+                if (colliders[i].gameObject != gameObject)
                 {
-                        if (parentID != null)
-                        {
-                            if (colliders[i].gameObject.GetComponent<HardCodedGrapple>() == null) //FIX THIS
-                            {
-                                transform.position = colliders[i].gameObject.transform.position;
-                                Vector2 zero = new Vector2(0, 0);
-                                GetComponent<Rigidbody2D>().velocity = zero;
-                                hookedPosition = transform.position;
-                                isHooked = true;
-                            }
-                        }
+                    if (parentID != 0)
+                    { 
+                    if (colliders[i].gameObject.GetComponent<HardCodedGrapple>() == null) //FIX THIS
+                    {
+                        transform.position = colliders[i].gameObject.transform.position;
+                        Vector2 zero = new Vector2(0, 0);
+                        GetComponent<Rigidbody2D>().velocity = zero;
+                        hookedPosition = transform.position;
+                        isHooked = true;
+                    }
+                    }
                  }
             }
             
@@ -101,7 +101,7 @@ public class HookObject : MonoBehaviour
             isTensioned = false;
             normalizedVelocityFactor = new Vector2(playerPosition.x - transform.position.x, playerPosition.y - transform.position.y);
             normalizedVelocityFactor.Normalize();
-            GetComponent<Rigidbody2D>().velocity = normalizedVelocityFactor * hookSpeed;
+            GetComponent<Rigidbody2D>().velocity = normalizedVelocityFactor * hookSpeed ;
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, hitRadius, whatIsGrappleable);
             for (int i = 0; i < colliders.Length; i++)
             {
@@ -111,14 +111,15 @@ public class HookObject : MonoBehaviour
 
                     if (colliders[i].gameObject.GetComponent<HardCodedGrapple>().PlayerNumber == parentID)
                     {
-                        if (hookID.EndsWith("L"))
-                        {
-                            colliders[i].gameObject.GetComponent<HardCodedGrapple>().LHookOut = false; // shits broken af
-                        }
                         if (hookID.EndsWith("R"))
                         {
                             colliders[i].gameObject.GetComponent<HardCodedGrapple>().RHookOut = false; // shits broken af
                         }
+                        if (hookID.EndsWith("L"))
+                        {
+                            colliders[i].gameObject.GetComponent<HardCodedGrapple>().LHookOut = false; // shits broken af
+                        }
+                        
                         Destroy(gameObject);
 
                     }
