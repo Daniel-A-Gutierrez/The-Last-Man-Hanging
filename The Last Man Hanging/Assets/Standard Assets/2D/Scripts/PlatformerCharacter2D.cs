@@ -34,7 +34,7 @@ namespace UnityStandardAssets._2D
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
-
+        
         private void Update()
         {
             m_Grounded = false;
@@ -115,7 +115,7 @@ namespace UnityStandardAssets._2D
             }
 
         }
-
+        
 
         public void Move(float move, bool crouch, bool jump)
         {
