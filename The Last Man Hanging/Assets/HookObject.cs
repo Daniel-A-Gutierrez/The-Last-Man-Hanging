@@ -48,15 +48,19 @@ public class HookObject : MonoBehaviour
     void Update()
     {
 
-        if (isHooked & !RETURN)
+        if (isHooked & !RETURN) // if youre swinging.
         {
             transform.position = hookedPosition;
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             GetComponent<Rigidbody2D>().angularVelocity = 0;
             float distance = Vector2.Distance(playerPosition, transform.position);
-            if (distance >= player.GetComponent<HardCodedGrapple>().slackLength)
+            if (distance >= player.GetComponent<HardCodedGrapple>().slackLength )
             {
                 isTensioned = true;
+            }
+            else
+            {
+                isTensioned = false;
             }
         }
         else if (!RETURN & !isHooked)
