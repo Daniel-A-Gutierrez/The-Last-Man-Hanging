@@ -10,7 +10,7 @@ namespace UnityStandardAssets._2D
         [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
-
+        [SerializeField] float airAccel;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .04f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
@@ -25,6 +25,7 @@ namespace UnityStandardAssets._2D
         bool suspended1 = false;
         bool suspended3 = false;
         bool suspended4 = false;
+        
         private void Awake()
         {
             // Setting up references.
@@ -34,10 +35,11 @@ namespace UnityStandardAssets._2D
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
-        
+
         private void Update()
         {
             m_Grounded = false;
+            float mass = GetComponent<Rigidbody2D>().mass;
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
@@ -60,6 +62,7 @@ namespace UnityStandardAssets._2D
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
             ForceMode2D impulse = ForceMode2D.Impulse;
+            /*
             if (m_Grounded)
             {
                 if (Input.GetKeyDown(KeyCode.A))
@@ -112,8 +115,42 @@ namespace UnityStandardAssets._2D
                     suspended3 = false;
                     suspended4 = false;
                 }
-            }
+            } */
+            Vector3 v3 = new Vector3(1, 0, 0);
+            if (m_Grounded)
+            {
+                if (Input.GetKey(KeyCode.A))
+                {
+                    transform.position -= m_MaxSpeed * Time.deltaTime * v3;
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x - m_MaxSpeed, GetComponent<Rigidbody2D>().velocity.y);//maybe this would work for normal movement too.
+                    }
+                }
+                
+                if (Input.GetKey(KeyCode.D))
+                {
+                    transform.position += m_MaxSpeed * Time.deltaTime * v3;
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x + m_MaxSpeed, GetComponent<Rigidbody2D>().velocity.y);//maybe this would work for normal movement too.
+                    }
+                }
+               
 
+            }
+            if (!m_Grounded)
+            {
+                if (Input.GetKey(KeyCode.A))
+                {
+                    GetComponent<Rigidbody2D>().AddForce( new Vector2(-1,0) * mass*airAccel*Time.deltaTime , ForceMode2D.Impulse);
+                }
+
+                if (Input.GetKey(KeyCode.D))
+                {
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
+                }
+            }
         }
         
 

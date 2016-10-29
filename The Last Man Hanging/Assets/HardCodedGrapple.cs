@@ -166,7 +166,48 @@ public class HardCodedGrapple : MonoBehaviour {
         Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
         if (LorR == 'L')
         {
-            Vector2 hookedPosition = hookL.transform.position;            
+            Vector2 hookedPosition = hookL.transform.position;
+            float distance = Vector2.Distance(transform.position, hookedPosition);
+
+            Vector2 directionVector = new Vector2((hookedPosition.x - transform.position.x), (hookedPosition.y - transform.position.y));
+
+            float deltaThetaV = directionVectorRotation - (Mathf.Atan(directionVector.y / directionVector.x) * 360f / 6.283185307f - 90); // may need to be negative
+            if (directionVector.x >= 0)
+            {
+                if (directionVector.y > 0)
+                {
+                    directionVectorRotation = (Mathf.Atan(directionVector.y / directionVector.x) * 360f / 6.283185307f - 90); //q1
+                }
+                else
+                {
+                    directionVectorRotation = (Mathf.Atan(directionVector.y / directionVector.x) * 360f / 6.283185307f - 90); // q4
+                }
+            }
+            else
+            {
+                if (directionVector.y > 0)
+                {
+                    directionVectorRotation = (Mathf.Atan(directionVector.y / directionVector.x) * 360f / 6.283185307f + 90); // q2
+                }
+                else
+                {
+                    directionVectorRotation = (Mathf.Atan(directionVector.y / directionVector.x) * 360f / 6.283185307f + 90); //q3
+                }
+            }
+
+
+            Vector2 rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
+
+            directionVector.Normalize();
+            Vector2 impulse = directionVector * Mathf.Pow((rotateVectorPlane(velocity, directionVectorRotation)).x, 2) / distance;
+            print(impulse.x + "       " + impulse.y + "        " + directionVectorRotation + " " + distance);
+            GetComponent<Rigidbody2D>().AddForce(mass * impulse * Time.deltaTime, ForceMode2D.Impulse);
+            Vector2 tension = -directionVector * rotateVectorPlane(velocity, directionVectorRotation).y;
+            GetComponent<Rigidbody2D>().AddForce(mass * tension * Time.deltaTime, ForceMode2D.Impulse);
+            if (distance > slackLength)
+            {
+                transform.position += (distance - slackLength) * new Vector3(directionVector.x, directionVector.y);
+            }
         }
         if (LorR == 'R')
         {
