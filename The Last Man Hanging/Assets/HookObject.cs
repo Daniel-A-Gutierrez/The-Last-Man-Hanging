@@ -86,6 +86,7 @@ public class HookObject : MonoBehaviour
                             GetComponent<Rigidbody2D>().velocity = zero;
                             hookedPosition = transform.position;
                             isHooked = true;
+                            player.GetComponent<HardCodedGrapple>().slackLength = distance - .1f;
                         }
                     }
                 }
