@@ -213,7 +213,7 @@ public class HardCodedGrapple : MonoBehaviour {
         {
             Vector2 hookedPosition = hookR.transform.position;
 
-            float distance = Vector2.Distance(transform.position, hookedPosition);
+            float distance = Mathf.Abs(Vector2.Distance(transform.position, hookedPosition));
 
             Vector2 directionVector = new Vector2((hookedPosition.x - transform.position.x), (hookedPosition.y - transform.position.y));
 
@@ -252,7 +252,10 @@ public class HardCodedGrapple : MonoBehaviour {
             GetComponent<Rigidbody2D>().AddForce(mass * tension * Time.deltaTime, ForceMode2D.Impulse);
             if(distance > slackLength)
             {
-                transform.position += (distance - slackLength) * new Vector3 (directionVector.x, directionVector.y);
+                float springConstant = 25;
+                Vector2 springForce = directionVector *springConstant * (distance-slackLength)*mass;
+                GetComponent<Rigidbody2D>().AddForce(springForce * Time.deltaTime, ForceMode2D.Impulse);
+                // transform.position += (distance - slackLength) * new Vector3 (directionVector.x, directionVector.y);
             }
             //Vector2 impulse = directionVector * Mathf.Pow((GetComponent<Rigidbody2D>().velocity.magnitude * Mathf.Cos(directionVectorRotation * 6.283185307f / 360f)), 2) / rotatedDirectionVector.magnitude;
             //
