@@ -4,12 +4,13 @@ using System.Collections;
 public class HardCodedGrapple : MonoBehaviour {
 
     // Use this for initialization
-    public float slackLength;
+    
     [SerializeField] public int PlayerNumber;
-    public readonly float gravity;
+    [SerializeField] float climbSpeed;
     bool LMBDepressed;
     bool RMBDepressed;
     [SerializeField] public float maxRopeLength;
+    [SerializeField] public float minRopeLength;
     public bool LHookOut;
     public bool RHookOut;
     Vector2 oldV;
@@ -19,6 +20,7 @@ public class HardCodedGrapple : MonoBehaviour {
     GameObject hookR; //hahaha    
     float directionVectorRotation;
 
+    public float slackLength;
     Vector2 velocity;
     float mass;
     Vector2 hookedPosition;
@@ -30,6 +32,9 @@ public class HardCodedGrapple : MonoBehaviour {
     float springConstant;
     Vector2 springForce;
     Vector2 impulse;
+
+    bool CLIMBUP = false;
+    bool CLIMBDOWN = false;
 
     void Start ()
     {
@@ -203,7 +208,18 @@ public class HardCodedGrapple : MonoBehaviour {
                 }
             }
 
-        
+
+            if (CLIMBUP)
+            {
+                slackLength -= climbSpeed;
+                CLIMBUP = false;
+            }
+            if (CLIMBDOWN)
+            {
+                slackLength += climbSpeed;
+                CLIMBDOWN = false;
+            }
+
             rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
             rotatedVelocityVector = rotateVectorPlane(velocity, directionVectorRotation);
             directionVector.Normalize();
@@ -257,6 +273,17 @@ public class HardCodedGrapple : MonoBehaviour {
                 }
             }
 
+
+            if (CLIMBUP)
+            {
+                slackLength *= .99f;
+                CLIMBUP = false;
+            }
+            if (CLIMBDOWN)
+            {
+                slackLength *= 1.01f;
+                CLIMBDOWN = false;
+            }
 
             rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
             rotatedVelocityVector = rotateVectorPlane(velocity, directionVectorRotation);
@@ -328,7 +355,14 @@ public class HardCodedGrapple : MonoBehaviour {
                 Swing('R');
             }
         }
-
+        if(Input.GetKey(KeyCode.W) &  slackLength>minRopeLength*1.02)
+        {
+            CLIMBUP = true;
+        }
+        if(Input.GetKey(KeyCode.S) & slackLength<maxRopeLength*.98)
+        {
+            CLIMBDOWN = true; 
+        }
 
 
 
