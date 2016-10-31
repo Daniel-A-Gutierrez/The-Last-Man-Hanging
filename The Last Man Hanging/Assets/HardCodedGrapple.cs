@@ -19,7 +19,17 @@ public class HardCodedGrapple : MonoBehaviour {
     GameObject hookR; //hahaha    
     float directionVectorRotation;
 
-
+    Vector2 velocity;
+    float mass;
+    Vector2 hookedPosition;
+    float distance;
+    Vector2 directionVector;
+    Vector2 rotatedDirectionVector;
+    Vector2 rotatedVelocityVector;
+    Vector2 tension;
+    float springConstant;
+    Vector2 springForce;
+    Vector2 impulse;
 
     void Start ()
     {
@@ -157,21 +167,19 @@ public class HardCodedGrapple : MonoBehaviour {
         return b;
 
     }
-    float oldDirectionVectorRotation;
-
-
+    
     void Swing(char LorR)
+        
     {
-        float mass = GetComponent<Rigidbody2D>().mass;
-        Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
+        mass = GetComponent<Rigidbody2D>().mass;
+        velocity = GetComponent<Rigidbody2D>().velocity;
         if (LorR == 'L')
         {
-            Vector2 hookedPosition = hookL.transform.position;
-            float distance = Vector2.Distance(transform.position, hookedPosition);
+            hookedPosition = hookL.transform.position;
+            distance = Vector2.Distance(transform.position, hookedPosition);
 
             Vector2 directionVector = new Vector2((hookedPosition.x - transform.position.x), (hookedPosition.y - transform.position.y));
 
-            float deltaThetaV = directionVectorRotation - (Mathf.Atan(directionVector.y / directionVector.x) * 360f / 6.283185307f - 90); // may need to be negative
             if (directionVector.x >= 0)
             {
                 if (directionVector.y > 0)
@@ -195,21 +203,21 @@ public class HardCodedGrapple : MonoBehaviour {
                 }
             }
 
-
-            Vector2 rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
-            Vector2 rotatedVelocityVector = rotateVectorPlane(velocity, directionVectorRotation);
+        
+            rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
+            rotatedVelocityVector = rotateVectorPlane(velocity, directionVectorRotation);
             directionVector.Normalize();
-            Vector2 impulse = directionVector * Mathf.Pow(rotatedVelocityVector.x, 2) / distance;
+            impulse = directionVector * Mathf.Pow(rotatedVelocityVector.x, 2) / distance;
             // print(impulse.x + "       " + impulse.y + "        " + directionVectorRotation + " " + distance);
             GetComponent<Rigidbody2D>().AddForce(mass * impulse * Time.deltaTime, ForceMode2D.Impulse);
-            Vector2 tension = -directionVector * rotatedVelocityVector.y;
+            tension = -directionVector * rotatedVelocityVector.y;
             GetComponent<Rigidbody2D>().AddForce(mass * tension * Time.deltaTime, ForceMode2D.Impulse);
             if (distance > slackLength)
             {
-                float springConstant = 25;
-                Vector2 springForce = directionVector * springConstant * (distance - slackLength) * mass; //if spring force exceeds a value break the connection
+                springConstant = 25;
+                springForce = directionVector * springConstant * (distance - slackLength) * mass; //if spring force exceeds a value break the connection
 
-                if (distance - slackLength > 1.5 & rotatedVelocityVector.y < 0)
+                if (distance - slackLength > 25/springConstant & rotatedVelocityVector.y < 0)
                 {
                     GetComponent<Rigidbody2D>().velocity = new Vector2((velocity + -rotatedVelocityVector.y * directionVector).x, (velocity + -rotatedVelocityVector.y * directionVector).y);
                 }
@@ -220,13 +228,12 @@ public class HardCodedGrapple : MonoBehaviour {
         }
         if (LorR == 'R')
         {
-            Vector2 hookedPosition = hookR.transform.position;
+            hookedPosition = hookR.transform.position;
 
-            float distance = Mathf.Abs(Vector2.Distance(transform.position, hookedPosition));
+            distance = Mathf.Abs(Vector2.Distance(transform.position, hookedPosition));
 
-            Vector2 directionVector = new Vector2((hookedPosition.x - transform.position.x), (hookedPosition.y - transform.position.y));
+            directionVector = new Vector2((hookedPosition.x - transform.position.x), (hookedPosition.y - transform.position.y));
 
-            float deltaThetaV = directionVectorRotation - (Mathf.Atan(directionVector.y / directionVector.x) * 360f / 6.283185307f - 90); // may need to be negative
             if (directionVector.x >= 0)
             {
                 if(directionVector.y > 0)
@@ -251,21 +258,20 @@ public class HardCodedGrapple : MonoBehaviour {
             }
 
 
-            Vector2 rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
-            Vector2 rotatedVelocityVector = rotateVectorPlane(velocity, directionVectorRotation);
+            rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
+            rotatedVelocityVector = rotateVectorPlane(velocity, directionVectorRotation);
             directionVector.Normalize();
-            Vector2 impulse = directionVector * Mathf.Pow(rotatedVelocityVector.x, 2) / distance;
+            impulse = directionVector * Mathf.Pow(rotatedVelocityVector.x, 2) / distance;
            // print(impulse.x + "       " + impulse.y + "        " + directionVectorRotation + " " + distance);
             GetComponent<Rigidbody2D>().AddForce(mass * impulse * Time.deltaTime, ForceMode2D.Impulse);
-            Vector2 tension = -directionVector * rotatedVelocityVector.y;
+            tension = -directionVector * rotatedVelocityVector.y;
             GetComponent<Rigidbody2D>().AddForce(mass * tension * Time.deltaTime, ForceMode2D.Impulse);
             if (distance > slackLength)
             {
-                float springConstant = 25;
-                float dampingPower = .4f; //1 is no damping, 0 is no spring force, 2 is square spring force
-                Vector2 springForce = directionVector * springConstant * (distance - slackLength) * mass; //if spring force exceeds a value break the connection
+                springConstant = 25;
+                springForce = directionVector * springConstant * (distance - slackLength) * mass; //if spring force exceeds a value break the connection
                 
-                if (distance - slackLength > 1.5  & rotatedVelocityVector.y <0)
+                if (distance - slackLength > 25/springConstant  & rotatedVelocityVector.y <0)
                 {
                     GetComponent<Rigidbody2D>().velocity = new Vector2((velocity + -rotatedVelocityVector.y * directionVector).x, (velocity + -rotatedVelocityVector.y * directionVector).y);
                 }
@@ -273,40 +279,7 @@ public class HardCodedGrapple : MonoBehaviour {
                 GetComponent<Rigidbody2D>().AddForce((springForce )* Time.deltaTime, ForceMode2D.Impulse);
                 // transform.position += (distance - slackLength) * new Vector3 (directionVector.x, directionVector.y);
             }
-            //Vector2 impulse = directionVector * Mathf.Pow((GetComponent<Rigidbody2D>().velocity.magnitude * Mathf.Cos(directionVectorRotation * 6.283185307f / 360f)), 2) / rotatedDirectionVector.magnitude;
-            //
-
-            /* 
-
-
-             Vector2 v; 
-             if (rotateVectorPlane(GetComponent<Rigidbody2D>().velocity, directionVectorRotation).y < 0 & 0 > directionVectorRotation & directionVectorRotation > -90 )
-             {
-                 v = -directionVector * rotateVectorPlane(GetComponent<Rigidbody2D>().velocity, directionVectorRotation).y;
-                 //print(v.x + " " + v.y);
-                 GetComponent<Rigidbody2D>().AddForce(v * Time.deltaTime, ForceMode2D.Impulse);
-             }
-             if (rotateVectorPlane(GetComponent<Rigidbody2D>().velocity, directionVectorRotation).y > 0 & -90 > directionVectorRotation & directionVectorRotation > -180)
-             {
-                 v = directionVector * rotateVectorPlane(GetComponent<Rigidbody2D>().velocity, directionVectorRotation).y;
-                 //print(v.x + " " + v.y);
-                 GetComponent<Rigidbody2D>().AddForce(v * Time.deltaTime, ForceMode2D.Impulse);
-             }
-             //impulse = directionVector * 55 * (maxRopeLength - distance) *1;
-
-             
-             */
-            //print(rotatedDirectionVector.x + "       " + rotatedDirectionVector.y + "        " + directionVectorRotation);
-            //get the velocity vector, copy it into vector2, rotate vector 2 into the plane, add an impulse that is the difference between the two.
-            /* velocity1 + dv + velocity2 
-             velocity2 is perpindicular to direction vector. Its magnitude is the dot product of vector1 and the direction perpindicular to the direction 
-             vector in the x direciton of v1.*/
-            //
-            //Vector2 perpindicularDirectionVector = Perpindicularize(directionVector, rotateVectorPlane(velocity, directionVectorRotation).x <= 0);
-            //GetComponent<Rigidbody2D>().AddForce(directionVector*Mathf.Sin((directionVectorRotation-oldDirectionVectorRotation)*2*Mathf.PI/360f)*velocity.magnitude *Time.deltaTime, ForceMode2D.Impulse);
-            //need to use rotate vector and if x is positive its counter clock wise, and if it is negative, it is clockwise. 
-            //oldDirectionVectorRotation = directionVectorRotation;
-
+            
         }
     }
 
@@ -315,9 +288,6 @@ public class HardCodedGrapple : MonoBehaviour {
 	void Update ()
     {
 
-        Vector2 newV = GetComponent<Rigidbody2D>().velocity;
-        acceleration = (newV - oldV) / Time.deltaTime;
-        oldV = GetComponent<Rigidbody2D>().velocity;
         if (Input.GetKey(KeyCode.Mouse0) & ! LHookOut) 
         {            
             hookL = (GameObject)(Instantiate(Resources.Load("HookPrefab")));
