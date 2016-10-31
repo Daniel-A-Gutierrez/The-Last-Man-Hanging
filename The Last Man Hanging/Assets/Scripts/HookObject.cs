@@ -11,12 +11,13 @@ public class HookObject : MonoBehaviour
     public Vector2 playerPosition;
     Vector2 normalizedVelocityFactor;
     [SerializeField] LayerMask whatIsGrappleable;
+    [SerializeField] LayerMask hooks;
     public bool isHooked;
     Vector2 hookedPosition;
     public int parentID;
     public string hookID;
     public float maxDistance;
-    GameObject player;
+    public GameObject player;
     public bool isTensioned;
     void Start ()
     {
@@ -72,6 +73,7 @@ public class HookObject : MonoBehaviour
 
             }
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, hitRadius, whatIsGrappleable);
+            Collider2D[] otherHooks = Physics2D.OverlapCircleAll(transform.position, hitRadius, hooks );
             for (int i = 0; i < colliders.Length; i++)
             {
 
@@ -79,7 +81,7 @@ public class HookObject : MonoBehaviour
                 {
                     if (parentID != 0)
                     {
-                        if (colliders[i].gameObject != player) //FIX THIS
+                        if (colliders[i].gameObject != player) 
                         {
                             transform.position = colliders[i].gameObject.transform.position;
                             Vector2 zero = new Vector2(0, 0);
@@ -87,6 +89,45 @@ public class HookObject : MonoBehaviour
                             hookedPosition = transform.position;
                             isHooked = true;
                             player.GetComponent<HardCodedGrapple>().slackLength = distance - .1f;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < otherHooks.Length; i++)
+            {
+
+                if (otherHooks[i].gameObject != gameObject)
+                {
+                    if (parentID != 0)
+                    {
+                        if (otherHooks[i].GetComponent<HookObject>().hookID.ToCharArray()[0] != hookID.ToCharArray()[0]) 
+                        {
+                            //hook collision with another player's hook
+                            GameObject tempPlayer = otherHooks[i].GetComponent<HookObject>().player;
+                            if (otherHooks[i].GetComponent<HookObject>().hookID.EndsWith("R"))
+                            {
+                                tempPlayer.GetComponent<HardCodedGrapple>().RHookOut = false; 
+                            }
+                            if (otherHooks[i].GetComponent<HookObject>().hookID.EndsWith("L"))
+                            {
+                                tempPlayer.GetComponent<HardCodedGrapple>().LHookOut = false; 
+                            }
+
+                            
+                            Destroy(otherHooks[i].gameObject); //WAIT 
+
+                            if (hookID.EndsWith("R"))
+                            {
+                                player.GetComponent<HardCodedGrapple>().RHookOut = false; 
+                            }
+                            if (hookID.EndsWith("L"))
+                            {
+                                player.GetComponent<HardCodedGrapple>().LHookOut = false; 
+                            }
+
+                            Destroy(gameObject);
+                           
                         }
                     }
                 }

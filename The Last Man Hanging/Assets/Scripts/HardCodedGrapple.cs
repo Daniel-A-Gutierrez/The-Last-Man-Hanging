@@ -5,7 +5,7 @@ public class HardCodedGrapple : MonoBehaviour {
 
     // Use this for initialization
     
-    [SerializeField] public int PlayerNumber;
+    [SerializeField] public int PlayerNumber; //must be 1 digit
     [SerializeField] float climbSpeed;
     bool LMBDepressed;
     bool RMBDepressed;
