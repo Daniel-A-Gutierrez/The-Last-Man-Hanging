@@ -3,7 +3,8 @@ using System.Collections;
 
 public class Aiming : MonoBehaviour
 {
-
+    float h = 0f;
+    float v = 0f;
 
     // Use this for initialization
     void Start()
@@ -14,8 +15,15 @@ public class Aiming : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float h = Input.GetAxis("J_Horizontal");
-        float v = Input.GetAxis("J_Vertical");
+        if (Input.GetAxis("J_Horizontal") != 0f)
+        {
+            h = Input.GetAxis("J_Horizontal");
+        }
+        if (Input.GetAxis("J_Vertical") != 0f)
+        {
+            v = Input.GetAxis("J_Vertical");
+        }
+        
         this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y, Mathf.Atan2(-h, -v) * Mathf.Rad2Deg);
 
         if (Input.GetKeyDown(KeyCode.Space))

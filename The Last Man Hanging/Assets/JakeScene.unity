@@ -288,10 +288,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 189830837}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59abdf131696e0240a219cbaaf4717f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a2b00e7dce95ea14b9ca3bac72158608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.3
+  speed: 0.5
 --- !u!1001 &242520291
 Prefab:
   m_ObjectHideFlags: 0
@@ -501,7 +501,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 378059655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d012f2e5d91c9d849b85669966f558cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d3482dfb0e279c43901449142c4027f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &378059658
@@ -556,7 +556,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 440455722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d012f2e5d91c9d849b85669966f558cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d3482dfb0e279c43901449142c4027f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &440455725
@@ -645,7 +645,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 496694074}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a9cd7b075f822246a3cc2f52cdcf2e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a989446509327c4586b5c5a6c498a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &556285206 stripped
@@ -957,7 +957,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 749230026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d012f2e5d91c9d849b85669966f558cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d3482dfb0e279c43901449142c4027f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &749230029
@@ -1441,7 +1441,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1863233051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d012f2e5d91c9d849b85669966f558cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d3482dfb0e279c43901449142c4027f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &1863233054
