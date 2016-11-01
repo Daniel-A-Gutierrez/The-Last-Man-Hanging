@@ -22,7 +22,7 @@ GameObject:
   - 50: {fileID: 50000013386629436}
   - 212: {fileID: 212000014096769148}
   - 114: {fileID: 114000011789805302}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HookPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,10 +77,14 @@ MonoBehaviour:
   whatIsGrappleable:
     serializedVersion: 2
     m_Bits: 2560
+  hooks:
+    serializedVersion: 2
+    m_Bits: 0
   isHooked: 0
   parentID: 0
   hookID: 
   maxDistance: 0
+  player: {fileID: 0}
   isTensioned: 0
 --- !u!212 &212000014096769148
 SpriteRenderer:

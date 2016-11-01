@@ -439,11 +439,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cefbef6a8e4f6478461aafa46f0fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slackLength: 11
   PlayerNumber: 1
+  climbSpeed: 0.5
   maxRopeLength: 12
+  minRopeLength: 3
   LHookOut: 0
   RHookOut: 0
+  slackLength: 11
 --- !u!232 &1574180555
 DistanceJoint2D:
   m_ObjectHideFlags: 0
