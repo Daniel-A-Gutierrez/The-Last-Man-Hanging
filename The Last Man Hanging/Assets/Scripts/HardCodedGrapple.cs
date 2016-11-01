@@ -6,16 +6,12 @@ public class HardCodedGrapple : MonoBehaviour {
     // Use this for initialization
     
     [SerializeField] public int PlayerNumber; //must be 1 digit
-    [SerializeField] float climbSpeed;
     bool LMBDepressed;
     bool RMBDepressed;
     [SerializeField] public float maxRopeLength;
     [SerializeField] public float minRopeLength;
     public bool LHookOut;
     public bool RHookOut;
-    Vector2 oldV;
-    Vector2 acceleration;
-    Vector2 oldForce;
     GameObject hookL;
     GameObject hookR; //hahaha    
     float directionVectorRotation;
@@ -211,12 +207,12 @@ public class HardCodedGrapple : MonoBehaviour {
 
             if (CLIMBUP)
             {
-                slackLength -= climbSpeed;
+                slackLength *= .99f;
                 CLIMBUP = false;
             }
             if (CLIMBDOWN)
             {
-                slackLength += climbSpeed;
+                slackLength *= 1.01f;
                 CLIMBDOWN = false;
             }
 

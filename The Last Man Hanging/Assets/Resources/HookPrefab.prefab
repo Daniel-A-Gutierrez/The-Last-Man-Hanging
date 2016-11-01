@@ -76,10 +76,10 @@ MonoBehaviour:
   playerPosition: {x: 0, y: 0}
   whatIsGrappleable:
     serializedVersion: 2
-    m_Bits: 2560
+    m_Bits: 3072
   hooks:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   isHooked: 0
   parentID: 0
   hookID: 

@@ -10,8 +10,8 @@ public class HookObject : MonoBehaviour
     public bool RETURN; 
     public Vector2 playerPosition;
     Vector2 normalizedVelocityFactor;
-    [SerializeField] LayerMask whatIsGrappleable;
-    [SerializeField] LayerMask hooks;
+    [SerializeField] LayerMask whatIsGrappleable; // grips and players
+    [SerializeField] LayerMask hooks; //hooks
     public bool isHooked;
     Vector2 hookedPosition;
     public int parentID;
