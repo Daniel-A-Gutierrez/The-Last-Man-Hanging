@@ -140,20 +140,18 @@ namespace UnityStandardAssets._2D
             }
             if (!m_Grounded)
             {
-                if(Mathf.Abs(GetComponent<HardCodedGrapple>().directionVectorRotation) < 120)
-                    {
-                  
 
-                    if (Input.GetKey(KeyCode.A))
+                print(GetComponent<HardCodedGrapple>().directionVectorRotation);
+                    if (Input.GetKey(KeyCode.A) & GetComponent<HardCodedGrapple>().directionVectorRotation < 90)
                     {
                         GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
                     }
 
-                    if (Input.GetKey(KeyCode.D))
+                    if (Input.GetKey(KeyCode.D) & GetComponent<HardCodedGrapple>().directionVectorRotation > -90)
                     {
                         GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
                     }
-                }
+                
             }
         }
         
