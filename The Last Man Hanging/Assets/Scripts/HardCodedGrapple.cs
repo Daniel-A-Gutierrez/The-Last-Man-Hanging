@@ -31,7 +31,6 @@ public class HardCodedGrapple : MonoBehaviour {
 
     bool CLIMBUP = false;
     bool CLIMBDOWN = false;
-
     void Start ()
     {
         
@@ -204,7 +203,6 @@ public class HardCodedGrapple : MonoBehaviour {
                 }
             }
 
-
             if (CLIMBUP)
             {
                 slackLength *= .99f;
@@ -219,9 +217,9 @@ public class HardCodedGrapple : MonoBehaviour {
             rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
             rotatedVelocityVector = rotateVectorPlane(velocity, directionVectorRotation);
             directionVector.Normalize();
-            impulse = directionVector * Mathf.Pow(rotatedVelocityVector.x, 2) / distance;
+            //impulse = directionVector * Mathf.Pow(rotatedVelocityVector.x, 2) / distance;
             // print(impulse.x + "       " + impulse.y + "        " + directionVectorRotation + " " + distance);
-            GetComponent<Rigidbody2D>().AddForce(mass * impulse * Time.deltaTime, ForceMode2D.Impulse);
+            //GetComponent<Rigidbody2D>().AddForce(mass * impulse * Time.deltaTime, ForceMode2D.Impulse);
             tension = -directionVector * rotatedVelocityVector.y;
             GetComponent<Rigidbody2D>().AddForce(mass * tension * Time.deltaTime, ForceMode2D.Impulse);
             if (distance > slackLength)
@@ -229,7 +227,7 @@ public class HardCodedGrapple : MonoBehaviour {
                 springConstant = 25;
                 springForce = directionVector * springConstant * (distance - slackLength) * mass; //if spring force exceeds a value break the connection
 
-                if (distance - slackLength > 25/springConstant & rotatedVelocityVector.y < 0)
+                if (distance - slackLength > 25 / springConstant & rotatedVelocityVector.y < 0)
                 {
                     GetComponent<Rigidbody2D>().velocity = new Vector2((velocity + -rotatedVelocityVector.y * directionVector).x, (velocity + -rotatedVelocityVector.y * directionVector).y);
                 }
@@ -284,9 +282,9 @@ public class HardCodedGrapple : MonoBehaviour {
             rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
             rotatedVelocityVector = rotateVectorPlane(velocity, directionVectorRotation);
             directionVector.Normalize();
-            impulse = directionVector * Mathf.Pow(rotatedVelocityVector.x, 2) / distance;
+            ///impulse = directionVector * Mathf.Pow(rotatedVelocityVector.x, 2) / distance;
            // print(impulse.x + "       " + impulse.y + "        " + directionVectorRotation + " " + distance);
-            GetComponent<Rigidbody2D>().AddForce(mass * impulse * Time.deltaTime, ForceMode2D.Impulse);
+            //GetComponent<Rigidbody2D>().AddForce(mass * impulse * Time.deltaTime, ForceMode2D.Impulse);
             tension = -directionVector * rotatedVelocityVector.y;
             GetComponent<Rigidbody2D>().AddForce(mass * tension * Time.deltaTime, ForceMode2D.Impulse);
             if (distance > slackLength)
