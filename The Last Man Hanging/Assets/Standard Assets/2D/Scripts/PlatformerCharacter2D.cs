@@ -141,7 +141,6 @@ namespace UnityStandardAssets._2D
             if (!m_Grounded)
             {
 
-                print(GetComponent<HardCodedGrapple>().directionVectorRotation);
                     if (Input.GetKey(KeyCode.A) & GetComponent<HardCodedGrapple>().directionVectorRotation < 90)
                     {
                         GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
