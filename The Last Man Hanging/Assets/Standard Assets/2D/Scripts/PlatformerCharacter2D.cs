@@ -119,7 +119,7 @@ namespace UnityStandardAssets._2D
             Vector3 v3 = new Vector3(1, 0, 0);
             if (m_Grounded)
             {
-                if (Input.GetKey(KeyCode.A))
+                if (Input.GetAxis("Horizontal")<-0.5f)
                 {
                     transform.position -= m_MaxSpeed * Time.deltaTime * v3;
                     if (Input.GetKeyDown(KeyCode.Space))
@@ -128,7 +128,7 @@ namespace UnityStandardAssets._2D
                     }
                 }
                 
-                if (Input.GetKey(KeyCode.D))
+				if (Input.GetAxis("Horizontal")>0.5f)
                 {
                     transform.position += m_MaxSpeed * Time.deltaTime * v3;
                     if (Input.GetKeyDown(KeyCode.Space))
@@ -141,12 +141,12 @@ namespace UnityStandardAssets._2D
             }
             if (!m_Grounded)
             {
-                if (Input.GetKey(KeyCode.A))
+                if (Input.GetAxis("Horizontal")<-0.5f)
                 {
                     GetComponent<Rigidbody2D>().AddForce( new Vector2(-1,0) * mass*airAccel*Time.deltaTime , ForceMode2D.Impulse);
                 }
 
-                if (Input.GetKey(KeyCode.D))
+				if (Input.GetAxis("Horizontal")>0.5f)
                 {
                     GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
                 }
@@ -266,7 +266,7 @@ namespace UnityStandardAssets._2D
                 }
             }
             // If the player should jump...
-            if (m_Grounded && jump && m_Anim.GetBool("Ground"))
+			if (m_Grounded && (Input.GetAxis("Jump")>0) && m_Anim.GetBool("Ground"))
             {
                 // Add a vertical force to the player.
                 m_Grounded = false;

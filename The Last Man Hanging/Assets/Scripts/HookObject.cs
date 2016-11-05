@@ -4,7 +4,6 @@ using System;
 [RequireComponent(typeof(Rigidbody2D))]
 public class HookObject : MonoBehaviour
 {
-
     [SerializeField] float hookSpeed;
     [SerializeField] float hitRadius;
     public bool RETURN; 
@@ -44,11 +43,8 @@ public class HookObject : MonoBehaviour
         player = go;        
     }
 
-
-
     void Update()
     {
-
         if (isHooked & !RETURN) // if youre swinging.
         {
             transform.position = hookedPosition;
@@ -76,7 +72,6 @@ public class HookObject : MonoBehaviour
             Collider2D[] otherHooks = Physics2D.OverlapCircleAll(transform.position, hitRadius, hooks );
             for (int i = 0; i < colliders.Length; i++)
             {
-
                 if (colliders[i].gameObject != gameObject)
                 {
                     if (parentID != 0)
@@ -93,10 +88,8 @@ public class HookObject : MonoBehaviour
                     }
                 }
             }
-
             for (int i = 0; i < otherHooks.Length; i++)
             {
-
                 if (otherHooks[i].gameObject != gameObject)
                 {
                     if (parentID != 0)
@@ -113,8 +106,7 @@ public class HookObject : MonoBehaviour
                             {
                                 tempPlayer.GetComponent<HardCodedGrapple>().LHookOut = false; 
                             }
-
-                            
+               
                             Destroy(otherHooks[i].gameObject); //WAIT 
 
                             if (hookID.EndsWith("R"))
@@ -132,7 +124,6 @@ public class HookObject : MonoBehaviour
                     }
                 }
             }
-
         }
         if (RETURN)
         {
@@ -154,12 +145,9 @@ public class HookObject : MonoBehaviour
                     {
                         player.GetComponent<HardCodedGrapple>().LHookOut = false; // shits broken af
                     }
-
                     Destroy(gameObject);
-
                 }
             }
         }
     }
 }
-
