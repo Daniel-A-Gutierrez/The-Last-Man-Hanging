@@ -182,7 +182,7 @@ using System.Collections;
             if (LorR == 'L')
             {
                 hookedPosition = hookL.transform.position;
-                distance = Vector2.Distance(transform.position, hookedPosition);
+                distance = Mathf.Abs(Vector2.Distance(transform.position, hookedPosition));
 
                 Vector2 directionVector = new Vector2((hookedPosition.x - transform.position.x), (hookedPosition.y - transform.position.y));
 
@@ -230,12 +230,13 @@ using System.Collections;
                 GetComponent<Rigidbody2D>().AddForce(mass * tension * Time.deltaTime, ForceMode2D.Impulse);
                 if (distance > slackLength)
                 {
-                    springConstant = 5;
+                    springConstant = 10;
                     springForce = directionVector * springConstant * (distance - slackLength) * mass; //if spring force exceeds a value break the connection
 
                     if (distance - slackLength > .001f / springConstant & rotatedVelocityVector.y < 0)
                     {
                         GetComponent<Rigidbody2D>().velocity = new Vector2((velocity + -rotatedVelocityVector.y * 1.5f * directionVector).x, (velocity + -rotatedVelocityVector.y * 1.5f * directionVector).y);
+                    print(distance - slackLength);
                     }
 
                     //Vector2 dampingForce = -directionVector * dampingPower * rotatedVelocityVector.y;
