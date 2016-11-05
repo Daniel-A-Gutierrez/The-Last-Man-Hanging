@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-
 namespace UnityStandardAssets._2D
 {
     public class PlatformerCharacter2D : MonoBehaviour
@@ -141,15 +140,15 @@ namespace UnityStandardAssets._2D
             }
             if (!m_Grounded)
             {
-                if (Input.GetAxis("Horizontal")<-0.5f)
-                {
-                    GetComponent<Rigidbody2D>().AddForce( new Vector2(-1,0) * mass*airAccel*Time.deltaTime , ForceMode2D.Impulse);
-                }
+                    if ((Input.GetAxis("Horizontal")<-0.5f) & GetComponent<HardCodedGrapple>().directionVectorRotation < 90)
+                    {
+                        GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
+                    }
 
-				if (Input.GetAxis("Horizontal")>0.5f)
-                {
-                    GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
-                }
+                    if ((Input.GetAxis("Horizontal")>0.5f) & GetComponent<HardCodedGrapple>().directionVectorRotation > -90)
+                    {
+                        GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
+                    }
             }
         }
         
