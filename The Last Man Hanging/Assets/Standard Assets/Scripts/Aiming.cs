@@ -15,13 +15,13 @@ public class Aiming : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("JR_Horizontal") != 0f)
+        if (Input.GetAxis("J1_Horizontal") != 0f)
         {
-            h = Input.GetAxis("JR_Horizontal");
+            h = Input.GetAxis("J1_Horizontal");
         }
-        if (Input.GetAxis("JR_Vertical") != 0f)
+        if (Input.GetAxis("J1_Vertical") != 0f)
         {
-            v = Input.GetAxis("JR_Vertical");
+            v = Input.GetAxis("J1_Vertical");
         }
         
         this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y, Mathf.Atan2(-h, -v) * Mathf.Rad2Deg);
