@@ -10,6 +10,8 @@ using System.Collections;
 
         [SerializeField]
         public int PlayerNumber; //must be 1 digit
+        [SerializeField]
+        bool keyboard;
         bool LMBDepressed;
         bool RMBDepressed;
         [SerializeField]
@@ -175,7 +177,6 @@ using System.Collections;
         }
 
         void Swing(char LorR)
-
         {
             mass = GetComponent<Rigidbody2D>().mass;
             velocity = GetComponent<Rigidbody2D>().velocity;
@@ -317,7 +318,7 @@ using System.Collections;
         void Update()
         {
 
-            if (Input.GetKey(KeyCode.Mouse0) & !LHookOut)
+            if(Input.GetKey(KeyCode.Mouse0) & !LHookOut)
             {
                 hookL = (GameObject)(Instantiate(Resources.Load("HookPrefab")));
                 LHookOut = true;
