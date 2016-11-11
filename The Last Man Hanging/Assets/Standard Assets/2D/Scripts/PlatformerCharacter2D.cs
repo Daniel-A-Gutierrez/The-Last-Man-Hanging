@@ -20,18 +20,20 @@ namespace UnityStandardAssets._2D
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
         private bool m_JustGrounded = true;
         const float m_PlayerAcceleration = .002f;
-        bool suspended2 = false;
         bool suspended1 = false;
+        bool suspended2 = false;
         bool suspended3 = false;
         bool suspended4 = false;
-        
-        private void Awake()
+        string player_num;
+
+       void Awake()
         {
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
             m_CeilingCheck = transform.Find("CeilingCheck");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+            player_num = "J" + GetComponent<HardCodedGrapple>().PlayerNumber;
         }
 
 
@@ -60,8 +62,8 @@ namespace UnityStandardAssets._2D
             m_Anim.SetBool("Ground", m_Grounded);
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
-            ForceMode2D impulse = ForceMode2D.Impulse;
             /*
+            ForceMode2D impulse = ForceMode2D.Impulse;
             if (m_Grounded)
             {
                 if (Input.GetKeyDown(KeyCode.A))
@@ -114,11 +116,12 @@ namespace UnityStandardAssets._2D
                     suspended3 = false;
                     suspended4 = false;
                 }
-            } */
+            } 
+            */
             Vector3 v3 = new Vector3(1, 0, 0);
             if (m_Grounded)
             {
-                if (Input.GetAxis("Horizontal")<-0.5f)
+                if (Input.GetAxis(player_num + "_Horizontal")<-0.5f)
                 {
                     transform.position -= m_MaxSpeed * Time.deltaTime * v3;
                     if (Input.GetKeyDown(KeyCode.Space))
@@ -127,7 +130,7 @@ namespace UnityStandardAssets._2D
                     }
                 }
                 
-				if (Input.GetAxis("Horizontal")>0.5f)
+				if (Input.GetAxis(player_num + "_Horizontal")>0.5f)
                 {
                     transform.position += m_MaxSpeed * Time.deltaTime * v3;
                     if (Input.GetKeyDown(KeyCode.Space))
@@ -140,12 +143,12 @@ namespace UnityStandardAssets._2D
             }
             if (!m_Grounded)
             {
-                    if ((Input.GetAxis("Horizontal")<-0.5f) & GetComponent<HardCodedGrapple>().directionVectorRotation < 90)
+                    if ((Input.GetAxis(player_num + "_Horizontal") <-0.5f) & GetComponent<HardCodedGrapple>().directionVectorRotation < 90)
                     {
                         GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
                     }
 
-                    if ((Input.GetAxis("Horizontal")>0.5f) & GetComponent<HardCodedGrapple>().directionVectorRotation > -90)
+                    if ((Input.GetAxis(player_num + "_Horizontal") >0.5f) & GetComponent<HardCodedGrapple>().directionVectorRotation > -90)
                     {
                         GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
                     }
