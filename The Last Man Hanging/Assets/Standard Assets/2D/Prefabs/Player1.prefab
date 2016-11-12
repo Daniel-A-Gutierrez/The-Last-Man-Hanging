@@ -249,6 +249,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d7b34a3bb2d4e4b926e7e729d3d410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hAim: 0
+  vAim: 0
+  xMove: 0
+  yMove: 0
+  LThrow: 0
+  RThrow: 0
+  jump: 0
+  useItemContinuous: 0
+  useItem1Frame: 0
+  justPressed: 0
+  controller: 0
+  justJumped: 0
+  boogie: 0
 --- !u!114 &114000011508832324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -257,11 +270,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011711988896}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1cefbef6a8e4f6478461aafa46f0fc1, type: 3}
+  m_Script: {fileID: 11500000, guid: c6cff1af7ee50974d989a2e93588a21c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerNumber: 1
-  keyboard: 0
   maxRopeLength: 12
   minRopeLength: 3
   LHookOut: 0
@@ -286,6 +298,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   airAccel: 15
+  m_Grounded: 0
 --- !u!212 &212000011441148752
 SpriteRenderer:
   m_ObjectHideFlags: 1

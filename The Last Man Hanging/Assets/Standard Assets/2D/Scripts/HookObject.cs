@@ -41,10 +41,9 @@ using System;
             playerPosition = go.transform.position;
             parentID = go.GetComponent<HardCodedGrapple>().PlayerNumber;
             hookID = "" + parentID + LorR;
-            //Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition); //thanks shawn for this function
+            
 			Vector2 target = GameObject.Find("sample-reticle").GetComponent<Aiming>().getAimVector();
-            //normalizedVelocityFactor = new Vector2(target.x - playerPosition.x, target.y - playerPosition.y);
-            //normalizedVelocityFactor.Normalize();
+            target.Normalize();
             transform.position = playerPosition + target * hitRadius + target * go.GetComponent<BoxCollider2D>().size.magnitude * 1.05f;
             GetComponent<Rigidbody2D>().velocity = target * hookSpeed;
             player = go;

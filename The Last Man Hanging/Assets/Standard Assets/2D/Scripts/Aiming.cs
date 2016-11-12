@@ -5,25 +5,27 @@ public class Aiming : MonoBehaviour
 {
     float h = 0f;
     float v = 0f;
-
+    GameObject player;
+    Platformer2DUserControl control;
     // Use this for initialization
     void Start()
     {
-
+        player = transform.parent.gameObject;
+        control = player.GetComponent<Platformer2DUserControl>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("J1_Horizontal") != 0f)
+        if (control.hAim != 0f)
         {
-            h = Input.GetAxis("J1_Horizontal");
+            h = control.hAim;
         }
-        if (Input.GetAxis("J1_Vertical") != 0f)
+        if (control.vAim != 0f)
         {
-            v = Input.GetAxis("J1_Vertical");
+            v = control.vAim;
         }
-        
+
         this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y, Mathf.Atan2(-h, -v) * Mathf.Rad2Deg);
 
         if (Input.GetKeyDown("joystick 1 button 0"))
@@ -32,7 +34,8 @@ public class Aiming : MonoBehaviour
             print("Vertical: " + v);
         }
     }
-	public Vector2 getAimVector(){
-		return new Vector2 (h, -v);
-	}
+    public Vector2 getAimVector()
+    {
+        return new Vector2(h, -v);
+    }
 }

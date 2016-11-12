@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011758097550}
   - 212: {fileID: 212000012840420084}
-  - 114: {fileID: 114000012231813708}
+  - 114: {fileID: 114000011310462596}
   m_Layer: 0
   m_Name: sample-reticle prefab
   m_TagString: Reticle
@@ -70,7 +70,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4000011758097550}
   m_RootOrder: 0
---- !u!114 &114000012231813708
+--- !u!114 &114000011310462596
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
