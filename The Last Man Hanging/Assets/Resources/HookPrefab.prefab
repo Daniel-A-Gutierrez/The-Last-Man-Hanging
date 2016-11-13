@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookSpeed: 25
-  hitRadius: 0.4
+  hitRadius: 0.75
   RETURN: 1
   playerPosition: {x: 0, y: 0}
   whatIsGrappleable:
