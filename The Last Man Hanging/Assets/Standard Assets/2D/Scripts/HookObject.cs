@@ -24,9 +24,12 @@ using System;
         public float maxDistance;
         public GameObject player;
         public bool isTensioned;
+        public AudioClip myClip;
+        AudioSource audio;
         void Start()
         {
             RETURN = false;
+            audio = GetComponent<AudioSource>();
         }
         public void Throw(GameObject go, char LorR)
         {
@@ -94,6 +97,7 @@ using System;
                                 hookedPosition = transform.position;
                                 isHooked = true;
                                 player.GetComponent<HardCodedGrapple>().slackLength = distance - .1f;
+                                audio.Play();
                             }
                         }
                     }

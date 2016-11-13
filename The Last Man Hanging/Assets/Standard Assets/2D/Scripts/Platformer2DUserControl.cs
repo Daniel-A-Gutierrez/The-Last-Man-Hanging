@@ -54,7 +54,7 @@ public class Platformer2DUserControl : MonoBehaviour
             yMove = Input.GetAxis("Vertical");
             LThrow = Input.GetKey(KeyCode.Mouse0);
             RThrow = Input.GetKey(KeyCode.Mouse1);
-            jump = Input.GetKeyDown("Space");
+            jump = Input.GetKeyDown(KeyCode.Space);
             useItemContinuous = Input.GetKey(KeyCode.Return);
             useItem1Frame = Input.GetKeyDown(KeyCode.Return);
         }
@@ -104,11 +104,10 @@ public class Platformer2DUserControl : MonoBehaviour
             yMove = Input.GetAxis("Vertical");
             LThrow = Input.GetKey(KeyCode.Mouse0);
             RThrow = Input.GetKey(KeyCode.Mouse1);
-            jump = Input.GetKeyDown("Space");
-            useItemContinuous = Input.GetKey(KeyCode.Space);
-            useItem1Frame = Input.GetKeyDown(KeyCode.Space);
+            jump = Input.GetKeyDown(KeyCode.Space);
+            useItemContinuous = Input.GetKey(KeyCode.Return);
+            useItem1Frame = Input.GetKeyDown(KeyCode.Return);
         }
-        print(LThrow + " " + RThrow);
         if (!m_Jump)
         {
             // Read the jump input in Update so button presses aren't missed.

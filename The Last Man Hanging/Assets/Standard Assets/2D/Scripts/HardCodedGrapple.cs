@@ -210,11 +210,11 @@ public class HardCodedGrapple : MonoBehaviour
                 }
             }
 
-            if (CLIMBUP)
-            {
-                slackLength *= .99f;
-                CLIMBUP = false;
-            }
+            //if (CLIMBUP)
+            //{
+            //    slackLength *= .99f;
+            //    CLIMBUP = false;
+            //}
             if (CLIMBDOWN)
             {
                 slackLength *= 1.01f;
@@ -237,7 +237,7 @@ public class HardCodedGrapple : MonoBehaviour
                 if (distance - slackLength > .001f / springConstant & rotatedVelocityVector.y < 0)
                 {
                     GetComponent<Rigidbody2D>().velocity = new Vector2((velocity + -rotatedVelocityVector.y * 1.5f * directionVector).x, (velocity + -rotatedVelocityVector.y * 1.5f * directionVector).y);
-                    print(distance - slackLength);
+                   // print(distance - slackLength);
                 }
 
                 //Vector2 dampingForce = -directionVector * dampingPower * rotatedVelocityVector.y;
@@ -277,11 +277,11 @@ public class HardCodedGrapple : MonoBehaviour
             }
 
 
-            if (CLIMBUP)
-            {
-                slackLength *= .99f;
-                CLIMBUP = false;
-            }
+            //if (CLIMBUP)
+            //{
+            //    slackLength *= .99f;
+            //    CLIMBUP = false;
+            //}
             if (CLIMBDOWN)
             {
                 slackLength *= 1.01f;
@@ -291,20 +291,22 @@ public class HardCodedGrapple : MonoBehaviour
             rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
             rotatedVelocityVector = rotateVectorPlane(velocity, directionVectorRotation);
             directionVector.Normalize();
-            ///impulse = directionVector * Mathf.Pow(rotatedVelocityVector.x, 2) / distance;
+            //impulse = directionVector * Mathf.Pow(rotatedVelocityVector.x, 2) / distance;
             // print(impulse.x + "       " + impulse.y + "        " + directionVectorRotation + " " + distance);
             //GetComponent<Rigidbody2D>().AddForce(mass * impulse * Time.deltaTime, ForceMode2D.Impulse);
             tension = -directionVector * rotatedVelocityVector.y;
             GetComponent<Rigidbody2D>().AddForce(mass * tension * Time.deltaTime, ForceMode2D.Impulse);
             if (distance > slackLength)
             {
-                springConstant = 25;
+                springConstant = 10;
                 springForce = directionVector * springConstant * (distance - slackLength) * mass; //if spring force exceeds a value break the connection
 
-                if (distance - slackLength > 25 / springConstant & rotatedVelocityVector.y < 0)
+                if (distance - slackLength > .001f / springConstant & rotatedVelocityVector.y < 0)
                 {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2((velocity + -rotatedVelocityVector.y * directionVector).x, (velocity + -rotatedVelocityVector.y * directionVector).y);
+                    GetComponent<Rigidbody2D>().velocity = new Vector2((velocity + -rotatedVelocityVector.y * 1.5f * directionVector).x, (velocity + -rotatedVelocityVector.y * 1.5f * directionVector).y);
+                    print(distance - slackLength);
                 }
+
                 //Vector2 dampingForce = -directionVector * dampingPower * rotatedVelocityVector.y;
                 GetComponent<Rigidbody2D>().AddForce((springForce) * Time.deltaTime, ForceMode2D.Impulse);
                 // transform.position += (distance - slackLength) * new Vector3 (directionVector.x, directionVector.y);
@@ -358,15 +360,22 @@ public class HardCodedGrapple : MonoBehaviour
                 Swing('R');
             }
         } // y is inverted
-        if (control.yMove < -.5 & slackLength > minRopeLength * 1.02)
+        
+        if (control.yMove > .5 & slackLength > minRopeLength * 1.02)
         {
             CLIMBUP = true;
             
         }
-        if (control.yMove>.5 & slackLength < maxRopeLength * .98)
+        if (control.yMove <-.5 & slackLength < maxRopeLength * .98)
         {
             CLIMBDOWN = true;
         }
+        if (CLIMBUP)
+        {
+            slackLength *= .99f;
+            CLIMBUP = false;
+        }
+        
 
 
 
