@@ -333,6 +333,7 @@ public class HardCodedGrapple : MonoBehaviour
             if (!LMBDepressed & !hookL.GetComponent<HookObject>().RETURN)
             {
                 hookL.GetComponent<HookObject>().RETURN = true;
+                hookL.GetComponent<HookObject>().actuallyReturn = true;
             }
             if (LMBDepressed & hookL.GetComponent<HookObject>().isTensioned)
             {
@@ -353,6 +354,7 @@ public class HardCodedGrapple : MonoBehaviour
             if (!RMBDepressed & !hookR.GetComponent<HookObject>().RETURN)
             {
                 hookR.GetComponent<HookObject>().RETURN = true;
+                hookR.GetComponent<HookObject>().actuallyReturn = true;
             }
             if (RMBDepressed & hookR.GetComponent<HookObject>().isTensioned)
             {

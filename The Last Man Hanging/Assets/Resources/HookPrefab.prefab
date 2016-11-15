@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookSpeed: 25
-  hitRadius: 0.75
+  hitRadius: 1.5
   RETURN: 1
   playerPosition: {x: 0, y: 0}
   whatIsGrappleable:
@@ -162,6 +162,7 @@ MonoBehaviour:
   player: {fileID: 0}
   isTensioned: 0
   myClip: {fileID: 0}
+  actuallyReturn: 0
 --- !u!212 &212000014096769148
 SpriteRenderer:
   m_ObjectHideFlags: 1
