@@ -36,6 +36,7 @@ public class HookObject : MonoBehaviour
     }
     public void Throw(GameObject go, char LorR)
     {
+        player = go;
         isHooked = false;
         isTensioned = false;
         this.maxDistance = go.GetComponent<HardCodedGrapple>().maxRopeLength;
@@ -48,11 +49,11 @@ public class HookObject : MonoBehaviour
         parentID = go.GetComponent<HardCodedGrapple>().PlayerNumber;
         hookID = "" + parentID + LorR;
 
-        Vector2 target = GameObject.Find("sample-reticle").GetComponent<Aiming>().getAimVector();
+        Vector2 target = go.transform.Find("sample-reticle").GetComponent<Aiming>().getAimVector();
         target.Normalize();
         transform.position = playerPosition + target * hitRadius + target * go.GetComponent<BoxCollider2D>().size.magnitude * .5f;
         GetComponent<Rigidbody2D>().velocity = target * hookSpeed ;
-        player = go;
+        
     }
 
 

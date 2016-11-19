@@ -72,86 +72,30 @@ public class PlatformerCharacter2D : MonoBehaviour
         if (m_JustGrounded == true)
         {
             m_Rigidbody2D.position.Set(m_Rigidbody2D.position.x, m_Rigidbody2D.position.y);
-            //m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0f);
             m_JustGrounded = false;
+            m_Anim.SetBool("Ground", true);
         }
         m_Anim.SetBool("Ground", m_Grounded);
         // Set the vertical animation
 
         m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
-        if(GetComponent<HardCodedGrapple>().CLIMBDOWN)
+        if (GetComponent<HardCodedGrapple>().CLIMBDOWN)
         {
             m_Anim.SetFloat("vSpeed", 0);
         }
-        /*
-        ForceMode2D impulse = ForceMode2D.Impulse;
-        if (m_Grounded)
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                m_Rigidbody2D.AddForce(new Vector2(-m_MaxSpeed, 0), impulse); //add a small constant force to counteract friction.
-                suspended1 = false;
-            }
-            if ((Input.GetKeyUp(KeyCode.A) & !suspended1 )| suspended2)
-            {
-                m_Rigidbody2D.AddForce(new Vector2(m_MaxSpeed, 0), impulse);
-                suspended2 = false;
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                m_Rigidbody2D.AddForce(new Vector2(m_MaxSpeed, 0), impulse);
-                suspended3 = false;
-            }
-            if ((Input.GetKeyUp(KeyCode.D) & !suspended3) | suspended4)
-            {
-                m_Rigidbody2D.AddForce(new Vector2(-m_MaxSpeed, 0), impulse);
-                suspended4 = false; 
-            }
-
-        }
-        if (!m_Grounded)
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                suspended1 = true;
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                suspended3 = true;
-            }
-            if (Input.GetKeyUp(KeyCode.A))
-            {
-                suspended2 = true;
-            }
-            if (Input.GetKeyUp(KeyCode.D))
-            {
-                suspended4 = true;
-            }
-            if (suspended1 & suspended2)
-            {
-                suspended1 = false;
-                suspended2 = false;
-            }
-            if (suspended3 & suspended4)
-            {
-                suspended3 = false;
-                suspended4 = false;
-            }
-        } 
-        */
         Vector3 v3 = new Vector3(1, 0, 0);
 
         if (m_Grounded)
         {
             if (control.xMove < -0.05f)
             {
-                transform.position += m_MaxSpeed * Time.deltaTime * v3 *control.xMove;
+                transform.position += m_MaxSpeed * Time.deltaTime * v3 * control.xMove;
 
             }
 
             if (control.xMove > 0.05f)
             {
-                transform.position += m_MaxSpeed * Time.deltaTime * v3*control.xMove ;
+                transform.position += m_MaxSpeed * Time.deltaTime * v3 * control.xMove;
 
             }
 
@@ -161,69 +105,21 @@ public class PlatformerCharacter2D : MonoBehaviour
         {
             if ((control.xMove < -0.05f) & GetComponent<HardCodedGrapple>().directionVectorRotation < 90)
             {
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * mass * airAccel*control.xMove * Time.deltaTime, ForceMode2D.Impulse);
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * mass * airAccel * control.xMove * Time.deltaTime, ForceMode2D.Impulse);
             }
 
             if ((control.xMove > 0.05f) & GetComponent<HardCodedGrapple>().directionVectorRotation > -90)
             {
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * mass * airAccel*control.xMove * Time.deltaTime, ForceMode2D.Impulse);
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * mass * airAccel * control.xMove * Time.deltaTime, ForceMode2D.Impulse);
             }
         }
-        /*if (m_Grounded)
-        {
-            if (Input.GetAxis(player_num + "_Horizontal")<-0.5f)
-            {
-                transform.position -= m_MaxSpeed * Time.deltaTime * v3;
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x - m_MaxSpeed, GetComponent<Rigidbody2D>().velocity.y);//maybe this would work for normal movement too.
-                }
-            }
-
-            if (Input.GetAxis(player_num + "_Horizontal")>0.5f)
-            {
-                transform.position += m_MaxSpeed * Time.deltaTime * v3;
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x + m_MaxSpeed, GetComponent<Rigidbody2D>().velocity.y);//maybe this would work for normal movement too.
-                }
-            }
-
-
-        }
-        if (!m_Grounded)
-        {
-                if ((Input.GetAxis(player_num + "_Horizontal") <-0.5f) & GetComponent<HardCodedGrapple>().directionVectorRotation < 90)
-                {
-                    GetComponent<Rigidbody2D>().AddForce(new Vector2(-1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
-                }
-
-                if ((Input.GetAxis(player_num + "_Horizontal") >0.5f) & GetComponent<HardCodedGrapple>().directionVectorRotation > -90)
-                {
-                    GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 0) * mass * airAccel * Time.deltaTime, ForceMode2D.Impulse);
-                }
-        }
-        */
-        ggds = false; 
+        ggds = false;
     }
 
 
     public void Move(float move, bool crouch, bool jump)
     {
-        // If crouching, check to see if the character can stand up
-        if (!crouch && m_Anim.GetBool("Crouch"))
-        {
-            // If the character has a ceiling preventing them from standing up, keep them crouching
-            if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-            {
-                crouch = true;
-            }
-        }
 
-        // Set whether or not the character is crouching in the animator
-        m_Anim.SetBool("Crouch", crouch);
-
-        //only control the player if grounded or airControl is turned on
         if (m_Grounded || m_AirControl)
         {
             // Reduce the speed if crouching by the crouchSpeed multiplier
@@ -231,80 +127,6 @@ public class PlatformerCharacter2D : MonoBehaviour
 
             // The Speed animator parameter is set to the absolute value of the horizontal input.
             m_Anim.SetFloat("Speed", Mathf.Abs(move));
-
-            // Move the character
-            /*
-            if (move > 0)
-            {
-                //m_Rigidbody2D.velocity = (new Vector2(move * (m_Rigidbody2D.velocity.y + m_PlayerAcceleration), m_Rigidbody2D.velocity.y));
-
-                if (m_Rigidbody2D.velocity.x > m_MaxSpeed)
-                {
-                    //m_Rigidbody2D.velocity = new Vector2(m_MaxSpeed, m_Rigidbody2D.velocity.y);
-                }
-            }
-            else if (move < 0)
-            {
-                //m_Rigidbody2D.velocity = new Vector2(move * (m_Rigidbody2D.velocity.x - m_PlayerAcceleration), m_Rigidbody2D.velocity.y);
-                if (m_Rigidbody2D.velocity.x < -m_MaxSpeed)
-                {
-                    //m_Rigidbody2D.velocity = new Vector2(-m_MaxSpeed, m_Rigidbody2D.velocity.y);
-                }
-            }
-            else if (move == 0) {
-                if (m_Rigidbody2D.velocity.x < 0)
-                {
-                   // m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x + m_PlayerAcceleration, m_Rigidbody2D.velocity.y);
-                    if (m_Rigidbody2D.velocity.x >= 0)
-                    {
-                       // m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
-                    }
-                }
-                else
-                {
-                    //m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x - m_PlayerAcceleration, m_Rigidbody2D.velocity.y);
-                    if (m_Rigidbody2D.velocity.x <= 0)
-                    {
-                        //m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
-                    }
-                }
-            }
-            */
-
-            /*
-            if (move > 0)
-            { 
-                m_Rigidbody2D.AddForce(new Vector2(m_MaxSpeed*.19f, 0));
-                if (m_Rigidbody2D.velocity.x < 0)
-                {
-                    m_Rigidbody2D.AddForce(new Vector2(m_MaxSpeed * .19f, 0));
-                }
-            }
-            if (move<0)
-            { 
-
-                m_Rigidbody2D.AddForce(new Vector2(-m_MaxSpeed*.19f, 0));
-                if(m_Rigidbody2D.velocity.x > 0)
-                {
-                    m_Rigidbody2D.AddForce(new Vector2(-m_MaxSpeed * .19f, 0));
-                }
-
-            }
-            if (move == 0 & m_Rigidbody2D.velocity.x != 0)
-            {
-                if (m_Rigidbody2D.velocity.x < 0)
-                {
-                    m_Rigidbody2D.AddForce(new Vector2(m_MaxSpeed * .45f, 0));
-                }
-                if (m_Rigidbody2D.velocity.x > 0)
-                {
-                    m_Rigidbody2D.AddForce(new Vector2(-m_MaxSpeed * .45f, 0));
-                }
-
-            }
-            */
-
-            // m_Rigidbody2D.velocity = new Vector2(move*m_MaxSpeed, m_Rigidbody2D.velocity.y);
 
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !m_FacingRight)
@@ -329,15 +151,17 @@ public class PlatformerCharacter2D : MonoBehaviour
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             if (control.xMove > 0.05f)
             {
-                
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x + m_MaxSpeed*control.xMove, GetComponent<Rigidbody2D>().velocity.y);//maybe this would work for normal movement too.
-                
+
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x +
+                    m_MaxSpeed * control.xMove, GetComponent<Rigidbody2D>().velocity.y);
+
             }
             if (control.xMove < -0.05f)
             {
-                
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x + m_MaxSpeed*control.xMove, GetComponent<Rigidbody2D>().velocity.y);//maybe this would work for normal movement too.
-                
+
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x + 
+                    m_MaxSpeed * control.xMove, GetComponent<Rigidbody2D>().velocity.y);
+
             }
             sda = false;
         }
