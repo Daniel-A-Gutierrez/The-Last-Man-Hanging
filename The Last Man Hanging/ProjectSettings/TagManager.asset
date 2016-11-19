@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Shielder
   - Stomper
+  - CameraWaypoint
+  - Reticle
+  - AirBomber
   layers:
   - Default
   - TransparentFX
