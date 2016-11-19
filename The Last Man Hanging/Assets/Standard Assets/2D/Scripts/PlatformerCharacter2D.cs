@@ -77,7 +77,12 @@ public class PlatformerCharacter2D : MonoBehaviour
         }
         m_Anim.SetBool("Ground", m_Grounded);
         // Set the vertical animation
+
         m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+        if(GetComponent<HardCodedGrapple>().CLIMBDOWN)
+        {
+            m_Anim.SetFloat("vSpeed", 0);
+        }
         /*
         ForceMode2D impulse = ForceMode2D.Impulse;
         if (m_Grounded)
