@@ -198,12 +198,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddec991105e1e94469e5fa30d976f6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasStomp: 1
-  hasShield: 1
+  hasStomp: 0
+  hasShield: 0
   hasAirBomb: 1
-  stompIcon: {fileID: 0}
-  shieldIcon: {fileID: 0}
-  airBombIcon: {fileID: 0}
+  stompIcon: {fileID: 21300000, guid: 1c939169c051d2845ac07900377ad42a, type: 3}
+  shieldIcon: {fileID: 21300000, guid: eca73906532981746865287edcef65d9, type: 3}
+  airBombIcon: {fileID: 21300000, guid: a83adfc775201824a9650f87919d5dab, type: 3}
   stompForce: 3000
 --- !u!1001 &119875810
 Prefab:
@@ -1204,11 +1204,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.23
+      value: 4.37
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 10.49
+      value: 10.04
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: m_LocalPosition.z

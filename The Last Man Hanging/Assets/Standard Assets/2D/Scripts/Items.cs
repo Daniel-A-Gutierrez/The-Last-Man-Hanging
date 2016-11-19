@@ -59,7 +59,7 @@ public class Items : MonoBehaviour {
             {
                 hasAirBomb = false;
                 itemIcon.GetComponent<SpriteRenderer>().enabled = false;
-                Instantiate(Resources.Load("AirBomb"), transform.position, transform.rotation);
+				Instantiate(Resources.Load("AirBomb"), new Vector2(transform.position.x - 1, transform.position.y), transform.rotation);
             }
         }
     }
