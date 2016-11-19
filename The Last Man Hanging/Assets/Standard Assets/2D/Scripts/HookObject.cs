@@ -25,7 +25,9 @@ public class HookObject : MonoBehaviour
     public GameObject player;
     public bool isTensioned;
     public AudioClip myClip;
+#pragma warning disable CS0108
     AudioSource audio;
+#pragma warning restore CS0108 
     public bool actuallyReturn;
     void Start()
     {
@@ -48,8 +50,8 @@ public class HookObject : MonoBehaviour
 
         Vector2 target = GameObject.Find("sample-reticle").GetComponent<Aiming>().getAimVector();
         target.Normalize();
-        transform.position = playerPosition + target * hitRadius + target * go.GetComponent<BoxCollider2D>().size.magnitude * 1.05f;
-        GetComponent<Rigidbody2D>().velocity = target * hookSpeed;
+        transform.position = playerPosition + target * hitRadius + target * go.GetComponent<BoxCollider2D>().size.magnitude * .5f;
+        GetComponent<Rigidbody2D>().velocity = target * hookSpeed ;
         player = go;
     }
 
@@ -57,7 +59,6 @@ public class HookObject : MonoBehaviour
 
     void Update()
     {
-        print(actuallyReturn);
         Vector2 moveDirection = gameObject.GetComponent<Rigidbody2D>().velocity;
         if (moveDirection != Vector2.zero)
         {
@@ -156,7 +157,7 @@ public class HookObject : MonoBehaviour
                 isTensioned = false;
                 normalizedVelocityFactor = new Vector2(playerPosition.x - transform.position.x, playerPosition.y - transform.position.y);
                 normalizedVelocityFactor.Normalize();
-                GetComponent<Rigidbody2D>().velocity = normalizedVelocityFactor * hookSpeed;
+                GetComponent<Rigidbody2D>().velocity = normalizedVelocityFactor * hookSpeed + player.GetComponent<Rigidbody2D>().velocity;
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, hitRadius, whatIsGrappleable);
                 for (int i = 0; i < colliders.Length; i++)
                 {
