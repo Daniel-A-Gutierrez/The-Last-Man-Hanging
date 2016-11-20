@@ -26,7 +26,7 @@ public class CameraScroll : MonoBehaviour {
     void moveToWaypoint()
     {
         Vector3 target = waypoints[currentWaypoint].transform.position;
-        transform.position = Vector3.MoveTowards(transform.position, target, speed);
+        transform.position = Vector3.MoveTowards(transform.position, target, speed*Time.deltaTime);
         if (transform.position == target)
         {
             findNextWaypoint();

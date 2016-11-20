@@ -318,7 +318,7 @@ public class HardCodedGrapple : MonoBehaviour
 
 
 
-    void  FixedUpdate()
+    void  Update()
     {
         isTensioned = false;
         if (control.LThrow & !LHookOut)
