@@ -132,7 +132,6 @@ public class HookObject : MonoBehaviour
 
 
                             Destroy(otherHooks[i].gameObject); //WAIT 
-
                             if (hookID.EndsWith("R"))
                             {
                                 player.GetComponent<HardCodedGrapple>().RHookOut = false;
@@ -141,7 +140,6 @@ public class HookObject : MonoBehaviour
                             {
                                 player.GetComponent<HardCodedGrapple>().LHookOut = false;
                             }
-
                             Destroy(gameObject);
 
                         }

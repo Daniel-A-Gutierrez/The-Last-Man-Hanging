@@ -77,8 +77,8 @@ public class PlatformerCharacter2D : MonoBehaviour
         }
         m_Anim.SetBool("Ground", m_Grounded);
         // Set the vertical animation
-
-        m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+        float yJumpInitVelocity =  m_JumpForce / m_Rigidbody2D.mass *Time.deltaTime; 
+        m_Anim.SetFloat("vSpeed", -m_Rigidbody2D.velocity.y/yJumpInitVelocity);
         if (GetComponent<HardCodedGrapple>().CLIMBDOWN)
         {
             m_Anim.SetFloat("vSpeed", 0);
@@ -164,6 +164,7 @@ public class PlatformerCharacter2D : MonoBehaviour
 
             }
             sda = false;
+            
         }
     }
 

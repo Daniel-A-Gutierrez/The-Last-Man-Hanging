@@ -305,7 +305,7 @@ public class HardCodedGrapple : MonoBehaviour
                 if (distance - slackLength > .001f / springConstant & rotatedVelocityVector.y < 0)
                 {
                     GetComponent<Rigidbody2D>().velocity = new Vector2((velocity + -rotatedVelocityVector.y * 1.5f * directionVector).x, (velocity + -rotatedVelocityVector.y * 1.5f * directionVector).y);
-                    print(distance - slackLength);
+                    //print(distance - slackLength);
                 }
 
                 //Vector2 dampingForce = -directionVector * dampingPower * rotatedVelocityVector.y;
