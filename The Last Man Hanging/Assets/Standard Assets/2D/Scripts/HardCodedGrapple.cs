@@ -7,7 +7,8 @@ public class HardCodedGrapple : MonoBehaviour
 {
 
     // Use this for initialization
-
+    public LineRenderer lineL;
+    public LineRenderer lineR;
     [SerializeField]
     public int PlayerNumber; //must be 1 digit
     bool LMBDepressed;
@@ -41,7 +42,8 @@ public class HardCodedGrapple : MonoBehaviour
     public bool CLIMBDOWN = false;
     void Start()
     {
-
+        lineL.enabled = false;
+        lineR.enabled = false;
         LMBDepressed = false;
         RMBDepressed = false;
         LHookOut = false;
@@ -326,11 +328,15 @@ public class HardCodedGrapple : MonoBehaviour
             hookL = (GameObject)(Instantiate(Resources.Load("HookPrefab")));
             LHookOut = true;
             hookL.GetComponent<HookObject>().Throw(gameObject, 'L');
+            lineL.enabled = true;
         }
         LMBDepressed = control.LThrow;
         if (LHookOut)
         {
             hookL.GetComponent<HookObject>().playerPosition = transform.position;
+            lineL.SetPosition(0, transform.position);
+            lineL.SetPosition(1, hookL.GetComponent<HookObject>().transform.position);
+            lineL.GetComponent<roperatio>().grabPos = hookL.GetComponent<HookObject>().transform.position;
             if (!LMBDepressed & !hookL.GetComponent<HookObject>().RETURN)
             {
                 hookL.GetComponent<HookObject>().RETURN = true;
@@ -342,17 +348,25 @@ public class HardCodedGrapple : MonoBehaviour
                 Swing('L');
             }
         }
+        if (hookL == null)
+        {
+            lineL.enabled = false;
+        }
         // same thing for right hook
         if (control.RThrow & !RHookOut) // check that last frame lmb wasnt down and now it is.
         {
             hookR = (GameObject)(Instantiate(Resources.Load("HookPrefab")));
             RHookOut = true;
             hookR.GetComponent<HookObject>().Throw(gameObject, 'R');
+            lineR.enabled = true;
         }
         RMBDepressed = control.RThrow;
         if (RHookOut)
         {
             hookR.GetComponent<HookObject>().playerPosition = transform.position;
+            lineR.SetPosition(0, transform.position);
+            lineR.SetPosition(1, hookR.GetComponent<HookObject>().transform.position);
+            lineR.GetComponent<roperatio>().grabPos = hookR.GetComponent<HookObject>().transform.position;
             if (!RMBDepressed & !hookR.GetComponent<HookObject>().RETURN)
             {
                 hookR.GetComponent<HookObject>().RETURN = true;
@@ -366,7 +380,10 @@ public class HardCodedGrapple : MonoBehaviour
                 isTensioned = true;
             }
         } // y is inverted
-        
+        if (hookR == null)
+        {
+            lineR.enabled = false;
+        }
         if (control.yMove < -.5 & slackLength > minRopeLength * 1.05)
         {
             CLIMBUP = true;
@@ -381,11 +398,6 @@ public class HardCodedGrapple : MonoBehaviour
             slackLength *= .95f;
             CLIMBUP = false;
         }
-        
-
-
-
-
     }
 }
 /*SO lets iron out the conditions im doing. On keypress Left Click, spawn a Grapple Object with Velocity V and trajectory
