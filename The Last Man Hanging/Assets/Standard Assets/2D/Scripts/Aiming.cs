@@ -34,6 +34,11 @@ public class Aiming : MonoBehaviour
             print("Vertical: " + v);
         }
     }
+    void LateUpdate()
+    {
+        this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y, Mathf.Atan2(-h, -v) * Mathf.Rad2Deg);
+
+    }
     public Vector2 getAimVector()
     {
         return new Vector2(h, -v);

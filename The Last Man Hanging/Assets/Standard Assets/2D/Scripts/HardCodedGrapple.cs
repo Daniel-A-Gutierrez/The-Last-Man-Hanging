@@ -20,6 +20,7 @@ public class HardCodedGrapple : MonoBehaviour
     public bool RHookOut;
     GameObject hookL;
     GameObject hookR; //hahaha    
+    public bool isTensioned;
     public float directionVectorRotation;
     Platformer2DUserControl control;
 
@@ -37,7 +38,7 @@ public class HardCodedGrapple : MonoBehaviour
     Vector2 impulse;
 
     bool CLIMBUP = false;
-    bool CLIMBDOWN = false;
+    public bool CLIMBDOWN = false;
     void Start()
     {
 
@@ -217,7 +218,7 @@ public class HardCodedGrapple : MonoBehaviour
             //}
             if (CLIMBDOWN)
             {
-                slackLength *= 1.01f;
+                slackLength *= 1.04f;
                 CLIMBDOWN = false;
             }
 
@@ -284,7 +285,7 @@ public class HardCodedGrapple : MonoBehaviour
             //}
             if (CLIMBDOWN)
             {
-                slackLength *= 1.01f;
+                slackLength *= 1.04f;
                 CLIMBDOWN = false;
             }
 
@@ -319,7 +320,7 @@ public class HardCodedGrapple : MonoBehaviour
 
     void  FixedUpdate()
     {
-
+        isTensioned = false;
         if (control.LThrow & !LHookOut)
         {
             hookL = (GameObject)(Instantiate(Resources.Load("HookPrefab")));
@@ -333,9 +334,11 @@ public class HardCodedGrapple : MonoBehaviour
             if (!LMBDepressed & !hookL.GetComponent<HookObject>().RETURN)
             {
                 hookL.GetComponent<HookObject>().RETURN = true;
+                hookL.GetComponent<HookObject>().actuallyReturn = true;
             }
             if (LMBDepressed & hookL.GetComponent<HookObject>().isTensioned)
             {
+                isTensioned = true;
                 Swing('L');
             }
         }
@@ -353,26 +356,29 @@ public class HardCodedGrapple : MonoBehaviour
             if (!RMBDepressed & !hookR.GetComponent<HookObject>().RETURN)
             {
                 hookR.GetComponent<HookObject>().RETURN = true;
+                hookR.GetComponent<HookObject>().actuallyReturn = true;
+                
             }
             if (RMBDepressed & hookR.GetComponent<HookObject>().isTensioned)
             {
 
                 Swing('R');
+                isTensioned = true;
             }
         } // y is inverted
         
-        if (control.yMove > .5 & slackLength > minRopeLength * 1.02)
+        if (control.yMove < -.5 & slackLength > minRopeLength * 1.05)
         {
             CLIMBUP = true;
             
         }
-        if (control.yMove <-.5 & slackLength < maxRopeLength * .98)
+        if (control.yMove >.5 & slackLength < maxRopeLength * .95)
         {
             CLIMBDOWN = true;
         }
         if (CLIMBUP)
         {
-            slackLength *= .99f;
+            slackLength *= .95f;
             CLIMBUP = false;
         }
         
