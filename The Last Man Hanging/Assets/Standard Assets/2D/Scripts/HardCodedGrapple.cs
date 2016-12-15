@@ -42,6 +42,8 @@ public class HardCodedGrapple : MonoBehaviour
     public bool CLIMBDOWN = false;
     void Start()
     {
+        lineL = transform.FindChild("lineL").GetComponent<LineRenderer>();
+        lineR = transform.FindChild("lineR").GetComponent<LineRenderer>();
         lineL.enabled = false;
         lineR.enabled = false;
         LMBDepressed = false;
@@ -322,7 +324,12 @@ public class HardCodedGrapple : MonoBehaviour
 
     void  Update()
     {
+        if(control == null)
+        {
+            Start();
+        }
         isTensioned = false;
+        //control is null
         if (control.LThrow & !LHookOut)
         {
             hookL = (GameObject)(Instantiate(Resources.Load("HookPrefab")));
