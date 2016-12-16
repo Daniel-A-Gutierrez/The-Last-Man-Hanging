@@ -940,6 +940,7 @@ GameObject:
   - 81: {fileID: 1702484132}
   - 114: {fileID: 1702484137}
   - 82: {fileID: 1702484138}
+  - 114: {fileID: 1702484139}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1026,7 +1027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b00e7dce95ea14b9ca3bac72158608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 1
 --- !u!82 &1702484138
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1101,6 +1102,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &1702484139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1702484131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a02c7fc19b9a28a42a70d0069c69fd73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFrameRate: 1000
 --- !u!1001 &1725290921
 Prefab:
   m_ObjectHideFlags: 0
@@ -1389,6 +1402,36 @@ Prefab:
         type: 2}
       propertyPath: m_WhatIsGround.m_Bits
       value: 1280
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010963784980, guid: 76177d1e4fbd2884d83e6ce9311a0f23,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010524756656, guid: 76177d1e4fbd2884d83e6ce9311a0f23,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 120000012348963770, guid: 76177d1e4fbd2884d83e6ce9311a0f23,
+        type: 2}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 120000012348963770, guid: 76177d1e4fbd2884d83e6ce9311a0f23,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 120000014164664476, guid: 76177d1e4fbd2884d83e6ce9311a0f23,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 120000014164664476, guid: 76177d1e4fbd2884d83e6ce9311a0f23,
+        type: 2}
+      propertyPath: m_MotionVectors
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 76177d1e4fbd2884d83e6ce9311a0f23, type: 2}
