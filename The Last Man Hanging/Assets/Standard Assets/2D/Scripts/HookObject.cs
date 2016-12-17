@@ -25,14 +25,12 @@ public class HookObject : MonoBehaviour
     public GameObject player;
     public bool isTensioned;
     public AudioClip myClip;
-#pragma warning disable CS0108
-    AudioSource audio;
-#pragma warning restore CS0108 
+    AudioSource Audio;
     public bool actuallyReturn;
     void Start()
     {
         RETURN = false;
-        audio = GetComponent<AudioSource>();
+        Audio = GetComponent<AudioSource>();
     }
     public void Throw(GameObject go, char LorR)
     {
@@ -104,7 +102,7 @@ public class HookObject : MonoBehaviour
                             hookedPosition = transform.position;
                             isHooked = true;
                             player.GetComponent<HardCodedGrapple>().slackLength = distance - .1f;
-                            audio.Play();
+                            Audio.Play();
                         }
                     }
                 }
@@ -198,7 +196,7 @@ public class HookObject : MonoBehaviour
                                 isHooked = true;
                                 RETURN = false;
                                 player.GetComponent<HardCodedGrapple>().slackLength = distance - .1f;
-                                audio.Play();
+                                Audio.Play();
                             }
                         }
                     }

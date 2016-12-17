@@ -26,10 +26,10 @@ public class PlatformerCharacter2D : MonoBehaviour
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
     private bool m_JustGrounded = true;
     const float m_PlayerAcceleration = .002f;
-    bool suspended1 = false;
-    bool suspended2 = false;
-    bool suspended3 = false;
-    bool suspended4 = false;
+    //bool suspended1 = false;
+    //bool suspended2 = false;
+    //bool suspended3 = false;
+    //bool suspended4 = false;
     int player_num;
     bool ggds;
     bool sda;

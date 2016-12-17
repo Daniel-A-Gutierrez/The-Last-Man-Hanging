@@ -353,11 +353,13 @@ public class HardCodedGrapple : MonoBehaviour
             {
                 isTensioned = true;
                 Swing('L');
+                lineL.GetComponent<roperatio>().taut = true;
             }
         }
         if (hookL == null)
         {
             lineL.enabled = false;
+            lineL.GetComponent<roperatio>().taut = false;
         }
         // same thing for right hook
         if (control.RThrow & !RHookOut) // check that last frame lmb wasnt down and now it is.
@@ -385,11 +387,13 @@ public class HardCodedGrapple : MonoBehaviour
 
                 Swing('R');
                 isTensioned = true;
+                lineR.GetComponent<roperatio>().taut = true;
             }
         } // y is inverted
         if (hookR == null)
         {
             lineR.enabled = false;
+            lineR.GetComponent<roperatio>().taut = false;
         }
         if (control.yMove < -.5 & slackLength > minRopeLength * 1.05)
         {

@@ -80,7 +80,7 @@ public class Parralax : MonoBehaviour {
             //print(go.GetComponent<BoxCollider2D>().size.x);
 
             widths[I] =  go.GetComponent<BoxCollider2D>().size.x * go.transform.localScale.x;// THIS CAN CAUSE PROBLEMS
-            sets[I] = widths[I] *1/3;
+            sets[I] = widths[I] *1/2;
             I++;
         }
         I--;

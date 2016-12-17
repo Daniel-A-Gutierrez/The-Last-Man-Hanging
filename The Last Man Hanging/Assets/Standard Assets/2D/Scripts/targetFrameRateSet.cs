@@ -5,6 +5,7 @@ public class targetFrameRateSet : MonoBehaviour {
 
     // Use this for initialization
     public int targetFrameRate;
+    int once;
 	void Start () {
 	
 	}
@@ -14,6 +15,11 @@ public class targetFrameRateSet : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-        print(1 / Time.deltaTime);
+        once++;
+        if (once == 100)
+        {
+            print(1 / Time.deltaTime);
+            once = 0;
+        }
 	}
 }
