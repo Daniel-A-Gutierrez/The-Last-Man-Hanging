@@ -40,6 +40,7 @@ public class Parralax : MonoBehaviour {
     float set4;
     float set5;
 
+    GameObject mainCamera;
 
     int I;
     void Start()
@@ -47,17 +48,29 @@ public class Parralax : MonoBehaviour {
         int childCount = transform.childCount;
         Vector3 mc = GameObject.FindWithTag("MainCamera").transform.position;
         transform.position = new Vector3(mc.x, mc.y, transform.position.z);
-        widths = new float[]{ width0, width1, width2,width3,width4,width5};
+        widths = new float[] { width0, width1, width2, width3, width4, width5 };
         speeds = new float[] { speed0, speed1, speed2, speed3, speed4, speed5 };
         layers = new GameObject[childCount];
         initialx = new float[childCount];
-        sets = sets = new float[childCount]; 
+        sets = sets = new float[childCount];
         I = 0;
         layers = GameObject.FindGameObjectsWithTag("BackgroundLayer");
-        foreach (GameObject go in layers)
+        GameObject[] placeholder = new GameObject[layers.Length];
+        for (int i = 0; i < layers.Length; i++)
         {
-                initialx[I] = transform.GetChild(I).localPosition.x;
-                I++;          
+            initialx[I] = transform.GetChild(I).localPosition.x;
+            I++;
+            string lastChar = layers[i].transform.name.Substring(layers[i].transform.name.Length - 1); // for some reason the order is 3 2 0 1
+            print("final char is   " + lastChar);
+            int place = int.Parse(lastChar);
+            print("place as   " + place);
+            print(place);
+            placeholder[place] = layers[i];
+        }
+        layers = placeholder;
+        foreach (GameObject go in placeholder)
+        {
+            print(go.ToString());
         }
         I--;
         //print("Object name " + layers[I].gameObject.ToString());
@@ -79,20 +92,48 @@ public class Parralax : MonoBehaviour {
         {
             //print(go.GetComponent<BoxCollider2D>().size.x);
 
-            widths[I] =  go.GetComponent<BoxCollider2D>().size.x * go.transform.localScale.x;// THIS CAN CAUSE PROBLEMS
-            sets[I] = widths[I] *1/2;
+            widths[I] = go.GetComponent<BoxCollider2D>().size.x * go.transform.localScale.x;// THIS CAN CAUSE PROBLEMS
+            sets[I] = widths[I] * 1 / 2;
             I++;
         }
         I--;
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
-	
+	void Awake()
+    {
+        int childCount = transform.childCount;
+        Vector3 mc = GameObject.FindWithTag("MainCamera").transform.position;
+        transform.position = new Vector3(mc.x, mc.y, transform.position.z);
+        widths = new float[childCount];
+        speeds = new float[] { speed0, speed1, speed2, speed3, speed4, speed5 };
+        layers = new GameObject[childCount];
+        initialx = new float[childCount];
+        sets = sets = new float[childCount];
+        layers = GameObject.FindGameObjectsWithTag("BackgroundLayer");
+        GameObject[] placeholder = new GameObject[layers.Length];
+        for (int i = 0; i < layers.Length; i++)
+        {
+            initialx[i] = transform.GetChild(i).localPosition.x;
+            string lastChar = layers[i].transform.name.Substring(layers[i].transform.name.Length - 1); // for some reason the order is 3 2 0 1
+            int place = int.Parse(lastChar);
+            placeholder[place] = layers[i];
+        }
+        layers = placeholder;
+
+        for(int i = 0; i < layers.Length; i ++)
+        {
+
+            widths[i] = layers[i].GetComponent<BoxCollider2D>().size.x * layers[i].transform.localScale.x;// THIS CAN CAUSE PROBLEMS
+            sets[i] = widths[i] * 1 / 2;
+        }
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+    }
 	// Update is called once per frame
 	void Update ()
     {
-
-        GameObject mc = GameObject.FindGameObjectWithTag("MainCamera");
+        GameObject mc = mainCamera;
         transform.position = new Vector3(mc.transform.position.x, mc.transform.position.y, transform.position.z);
-        for (int i = 0; i < I; i++)
+        for (int i = 0; i < layers.Length; i++)
         {
             
             layers[i].transform.localPosition = new Vector2(layers[i].transform.localPosition.x -
