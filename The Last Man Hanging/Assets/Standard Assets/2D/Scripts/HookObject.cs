@@ -61,7 +61,7 @@ public class HookObject : MonoBehaviour
         Vector2 moveDirection = gameObject.GetComponent<Rigidbody2D>().velocity;
         if (moveDirection != Vector2.zero)
         {
-            float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg - 135;
+            float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg - 45;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
         if (isHooked & !RETURN) // if youre swinging.
