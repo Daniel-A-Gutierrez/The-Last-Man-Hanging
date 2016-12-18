@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - BackgroundLayer
+  - CameraWaypoint
+  - Reticle
+  - UI
   layers:
   - Default
   - TransparentFX

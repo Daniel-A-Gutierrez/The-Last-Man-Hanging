@@ -61,17 +61,11 @@ public class Parralax : MonoBehaviour {
             initialx[I] = transform.GetChild(I).localPosition.x;
             I++;
             string lastChar = layers[i].transform.name.Substring(layers[i].transform.name.Length - 1); // for some reason the order is 3 2 0 1
-            print("final char is   " + lastChar);
             int place = int.Parse(lastChar);
-            print("place as   " + place);
-            print(place);
             placeholder[place] = layers[i];
         }
         layers = placeholder;
-        foreach (GameObject go in placeholder)
-        {
-            print(go.ToString());
-        }
+
         I--;
         //print("Object name " + layers[I].gameObject.ToString());
         //print("sprite is null " + layers[I].GetComponent<SpriteRenderer>().sprite == null);

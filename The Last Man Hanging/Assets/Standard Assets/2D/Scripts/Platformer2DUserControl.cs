@@ -25,6 +25,7 @@ public class Platformer2DUserControl : MonoBehaviour
     public bool controller;
     public bool justJumped;
     public bool boogie;
+    public bool inputing = true;
 
     private void Awake()
     {
@@ -63,64 +64,75 @@ public class Platformer2DUserControl : MonoBehaviour
 
     private void Update()
     {
-        if (controller)
+        if (inputing)
         {
-            hAim = Input.GetAxis("Cont_" + playerNumber + "_Right_Horiz");
-            vAim = Input.GetAxis("Cont_" + playerNumber + "_Right_Vert");
-            xMove = Input.GetAxis("Cont_" + playerNumber + "_Left_Horiz");
-            yMove = Input.GetAxis("Cont_" + playerNumber + "_Left_Vert");
-            LThrow = Input.GetAxis("Cont_" + playerNumber + "_RB") > .95;
-            RThrow = Input.GetAxis("Cont_" + playerNumber + "_RT") > .95;
-            jump = Input.GetKeyDown("joystick " + playerNumber + " button 8");
-            useItemContinuous = Input.GetAxis("Cont_" + playerNumber + "_B") > .95;
-            if (useItemContinuous & justPressed)
+            if (controller)
             {
-                useItem1Frame = false;
+                hAim = Input.GetAxis("Cont_" + playerNumber + "_Right_Horiz");
+                vAim = Input.GetAxis("Cont_" + playerNumber + "_Right_Vert");
+                xMove = Input.GetAxis("Cont_" + playerNumber + "_Left_Horiz");
+                yMove = Input.GetAxis("Cont_" + playerNumber + "_Left_Vert");
+                LThrow = Input.GetAxis("Cont_" + playerNumber + "_RB") > .95;
+                RThrow = Input.GetAxis("Cont_" + playerNumber + "_RT") > .95;
+                jump = Input.GetKeyDown("joystick " + playerNumber + " button 8");
+                useItemContinuous = Input.GetAxis("Cont_" + playerNumber + "_B") > .95;
+                if (useItemContinuous & justPressed)
+                {
+                    useItem1Frame = false;
+                }
+                if (useItemContinuous & !justPressed)
+                {
+                    useItem1Frame = true;
+                    justPressed = true;
+                }
+
+                if (!useItemContinuous)
+                {
+                    justPressed = false;
+                    useItem1Frame = false;
+                }
+
+
             }
-            if (useItemContinuous & !justPressed)
+
+            else
             {
-                useItem1Frame = true;
-                justPressed = true;
+                target = Camera.main.ScreenToWorldPoint(Input.mousePosition); //thanks shawn for this function
+                playerPosition = transform.position;
+                normalizedVelocityFactor = new Vector2(target.x - playerPosition.x, target.y - playerPosition.y);
+                normalizedVelocityFactor.Normalize();
+                hAim = normalizedVelocityFactor.x;
+                vAim = -normalizedVelocityFactor.y;
+                xMove = Input.GetAxis("Horizontal");
+                yMove = Input.GetAxis("Vertical");
+                LThrow = Input.GetKey(KeyCode.Mouse0);
+                RThrow = Input.GetKey(KeyCode.Mouse1);
+                jump = Input.GetKeyDown(KeyCode.Space);
+                useItemContinuous = Input.GetKey(KeyCode.Return);
+                useItem1Frame = Input.GetKeyDown(KeyCode.Return);
             }
-
-            if (!useItemContinuous)
+            if (!m_Jump)
             {
-                justPressed = false;
-                useItem1Frame = false;
+                // Read the jump input in Update so button presses aren't missed.
+                //m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                //m_Jump = jump;
             }
-
-
+            bool crouch = false;
+            if (jump)
+            {
+                GetComponent<PlatformerCharacter2D>().jump();
+            }
+            m_Character.Move(xMove, crouch, jump);
+            jump = false;
         }
-
-        else
-        {
-            target = Camera.main.ScreenToWorldPoint(Input.mousePosition); //thanks shawn for this function
-            playerPosition = transform.position;
-            normalizedVelocityFactor = new Vector2(target.x - playerPosition.x, target.y - playerPosition.y);
-            normalizedVelocityFactor.Normalize();
-            hAim = normalizedVelocityFactor.x;
-            vAim = -normalizedVelocityFactor.y;
-            xMove = Input.GetAxis("Horizontal");
-            yMove = Input.GetAxis("Vertical");
-            LThrow = Input.GetKey(KeyCode.Mouse0);
-            RThrow = Input.GetKey(KeyCode.Mouse1);
-            jump = Input.GetKeyDown(KeyCode.Space);
-            useItemContinuous = Input.GetKey(KeyCode.Return);
-            useItem1Frame = Input.GetKeyDown(KeyCode.Return);
-        }
-        if (!m_Jump)
-        {
-            // Read the jump input in Update so button presses aren't missed.
-            //m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-            //m_Jump = jump;
-        }
-        bool crouch = false;
-        if (jump)
-        { 
-          GetComponent<PlatformerCharacter2D>().jump();
-        }
-        m_Character.Move(xMove, crouch, jump);
-        jump = false;
+    }
+    public void noInput()
+    {
+        inputing = false;
+    }
+    public void startInput()
+    {
+        inputing = true;
     }
 
 

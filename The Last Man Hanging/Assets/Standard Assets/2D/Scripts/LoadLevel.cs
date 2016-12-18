@@ -11,8 +11,9 @@ public class LoadLevel : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown("joystick 1 button 8") || Input.GetKeyDown("joystick 2 button 8") || Input.GetKeyDown("joystick 3 button 8") || Input.GetKeyDown("joystick 3 button 8"))
+        if (Input.GetKeyDown("joystick 1 button 7") || Input.GetKeyDown("joystick 2 button 7") || Input.GetKeyDown("joystick 3 button 7") || Input.GetKeyDown("joystick 4 button 7"))
         {
+            print("start");
             Load_Level(1);
         }
     }
