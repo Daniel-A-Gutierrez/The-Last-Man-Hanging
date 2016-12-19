@@ -28,6 +28,7 @@ public class HookObject : MonoBehaviour
     AudioSource Audio;
     public bool actuallyReturn;
     public GameObject hookedTo;
+    float grabTime;
 
     void Start()
     {
@@ -66,6 +67,11 @@ public class HookObject : MonoBehaviour
             float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg - 45;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
+        if(grabTime != 0 & Time.time - grabTime > 2.5)
+        {
+            RETURN = true;
+            actuallyReturn = true;
+        }
         if (isHooked & !RETURN) // if youre swinging.
         {
             transform.position = hookedTo.transform.position; 
@@ -99,6 +105,10 @@ public class HookObject : MonoBehaviour
                         if (colliders[i].gameObject != player)
                         {
                             hookedTo = colliders[i].gameObject;
+                            if (hookedTo.tag.Equals( "Player") ) 
+                            {
+                                grabTime = Time.time;
+                            }
                             transform.position = colliders[i].gameObject.transform.position;
                             Vector2 zero = new Vector2(0, 0);
                             GetComponent<Rigidbody2D>().velocity = zero;
@@ -160,6 +170,7 @@ public class HookObject : MonoBehaviour
                 GetComponent<Rigidbody2D>().velocity = normalizedVelocityFactor * hookSpeed + player.GetComponent<Rigidbody2D>().velocity;
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, hitRadius, whatIsGrappleable);
                 hookedTo = null;
+                grabTime = 0;
                 for (int i = 0; i < colliders.Length; i++)
                 {
                     if (colliders[i].gameObject == player)
@@ -201,6 +212,10 @@ public class HookObject : MonoBehaviour
                                 RETURN = false;
                                 player.GetComponent<HardCodedGrapple>().slackLength = distance - .1f;
                                 hookedTo = colliders[i].gameObject;
+                                if (hookedTo.tag.Equals("Player"))
+                                {
+                                    grabTime = Time.time;
+                                }
                                 Audio.Play();
                             }
                         }
