@@ -225,7 +225,11 @@ public class HardCodedGrapple : MonoBehaviour
                 slackLength *= 1.04f;
                 CLIMBDOWN = false;
             }
-
+            GameObject whatIsHookedTo = null;
+            if(hookL.GetComponent<HookObject>().hookedTo != null && hookL.GetComponent<HookObject>().hookedTo.tag.Equals("Player"))
+            {
+                whatIsHookedTo = hookL.GetComponent<HookObject>().hookedTo;
+            }
             rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
             rotatedVelocityVector = rotateVectorPlane(velocity, directionVectorRotation);
             directionVector.Normalize();
@@ -248,6 +252,10 @@ public class HardCodedGrapple : MonoBehaviour
                 //Vector2 dampingForce = -directionVector * dampingPower * rotatedVelocityVector.y;
                 GetComponent<Rigidbody2D>().AddForce((springForce) * Time.deltaTime, ForceMode2D.Impulse);
                 // transform.position += (distance - slackLength) * new Vector3 (directionVector.x, directionVector.y);
+            }
+            if(whatIsHookedTo != null)
+            {
+                whatIsHookedTo.GetComponent<Rigidbody2D>().AddForce(-(springForce*Time.deltaTime + mass * tension * Time.deltaTime), ForceMode2D.Impulse);
             }
         }
         if (LorR == 'R')
@@ -292,7 +300,12 @@ public class HardCodedGrapple : MonoBehaviour
                 slackLength *= 1.04f;
                 CLIMBDOWN = false;
             }
+            GameObject whatIsHookedTo = null;
 
+            if (hookR.GetComponent<HookObject>().hookedTo != null && hookR.GetComponent<HookObject>().hookedTo.tag.Equals("Player"))
+            {
+                whatIsHookedTo = hookR.GetComponent<HookObject>().hookedTo;
+            }
             rotatedDirectionVector = rotateVectorPlane(directionVector, directionVectorRotation);
             rotatedVelocityVector = rotateVectorPlane(velocity, directionVectorRotation);
             directionVector.Normalize();
@@ -315,6 +328,10 @@ public class HardCodedGrapple : MonoBehaviour
                 //Vector2 dampingForce = -directionVector * dampingPower * rotatedVelocityVector.y;
                 GetComponent<Rigidbody2D>().AddForce((springForce) * Time.deltaTime, ForceMode2D.Impulse);
                 // transform.position += (distance - slackLength) * new Vector3 (directionVector.x, directionVector.y);
+            }
+            if (whatIsHookedTo != null)
+            {
+                whatIsHookedTo.GetComponent<Rigidbody2D>().AddForce(-(springForce*Time.deltaTime + mass * tension * Time.deltaTime), ForceMode2D.Impulse);
             }
 
         }

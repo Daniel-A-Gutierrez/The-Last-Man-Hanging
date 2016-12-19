@@ -27,6 +27,8 @@ public class HookObject : MonoBehaviour
     public AudioClip myClip;
     AudioSource Audio;
     public bool actuallyReturn;
+    public GameObject hookedTo;
+
     void Start()
     {
         RETURN = false;
@@ -66,7 +68,7 @@ public class HookObject : MonoBehaviour
         }
         if (isHooked & !RETURN) // if youre swinging.
         {
-            transform.position = hookedPosition;
+            transform.position = hookedTo.transform.position; 
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             GetComponent<Rigidbody2D>().angularVelocity = 0;
             float distance = Vector2.Distance(playerPosition, transform.position);
@@ -96,6 +98,7 @@ public class HookObject : MonoBehaviour
                     {
                         if (colliders[i].gameObject != player)
                         {
+                            hookedTo = colliders[i].gameObject;
                             transform.position = colliders[i].gameObject.transform.position;
                             Vector2 zero = new Vector2(0, 0);
                             GetComponent<Rigidbody2D>().velocity = zero;
@@ -156,6 +159,7 @@ public class HookObject : MonoBehaviour
                 normalizedVelocityFactor.Normalize();
                 GetComponent<Rigidbody2D>().velocity = normalizedVelocityFactor * hookSpeed + player.GetComponent<Rigidbody2D>().velocity;
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, hitRadius, whatIsGrappleable);
+                hookedTo = null;
                 for (int i = 0; i < colliders.Length; i++)
                 {
                     if (colliders[i].gameObject == player)
@@ -196,6 +200,7 @@ public class HookObject : MonoBehaviour
                                 isHooked = true;
                                 RETURN = false;
                                 player.GetComponent<HardCodedGrapple>().slackLength = distance - .1f;
+                                hookedTo = colliders[i].gameObject;
                                 Audio.Play();
                             }
                         }
