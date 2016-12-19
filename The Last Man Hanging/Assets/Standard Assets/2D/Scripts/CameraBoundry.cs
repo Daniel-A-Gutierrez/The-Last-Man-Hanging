@@ -18,6 +18,8 @@ public class CameraBoundry : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             Destroy(other.gameObject);
+            GameObject.FindGameObjectWithTag("CountdownStarter").GetComponent<CountdownStart>().decrementPlayerCount();
         }
+       
     }
 }

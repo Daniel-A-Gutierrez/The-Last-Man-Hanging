@@ -8,13 +8,15 @@ public class CountdownStart : MonoBehaviour {
     float timeStart;
     bool poop = false;
     GameObject theCanvas;
+    int playersLeft;
+    float timeEnd;
 	void Start ()
     {
         theCanvas = GameObject.Find("Canvas");
         timeStart = Time.time;
         PauseEverything();
+        playersLeft = 4;
 	}
-	
     void PauseEverything()
     {
         cameraSpeed = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraScroll>().speed;
@@ -28,11 +30,11 @@ public class CountdownStart : MonoBehaviour {
     }
     void StartEverything()
     {
-        foreach(GameObject go in GameObject.FindGameObjectsWithTag("UI"))
-        {
-            Destroy(go);
-        }
-        
+        //foreach(GameObject go in GameObject.FindGameObjectsWithTag("UI"))
+        //{
+        //    Destroy(go);
+        //}
+        theCanvas.GetComponent<CountdownManager>().SetText(" ");
         GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraScroll>().speed = cameraSpeed;
         
         GameObject[] gos = GameObject.FindGameObjectsWithTag("Player");
@@ -43,6 +45,20 @@ public class CountdownStart : MonoBehaviour {
         GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<StartSong>().Play();
     }
 	// Update is called once per frame
+    public void decrementPlayerCount()
+    {
+        playersLeft--;
+        if (playersLeft == 1)
+        {
+            PauseEverything();
+            print(GameObject.FindGameObjectWithTag("Player").GetComponent<HardCodedGrapple>().PlayerNumber);
+            theCanvas.GetComponent<CountdownManager>().fitText();
+            theCanvas.GetComponent<CountdownManager>().SetText("<b>PLAYER " + GameObject.FindGameObjectWithTag("Player").GetComponent<HardCodedGrapple>().PlayerNumber + " HAS WON</b>");
+
+            timeEnd = Time.time;
+        }
+        
+    }
 	void Update ()
     {
 	    if(Time.time - timeStart > 3 &!poop)
@@ -58,6 +74,9 @@ public class CountdownStart : MonoBehaviour {
         {
             theCanvas.GetComponent<CountdownManager>().SetText("<b>2</b>");
         }
-
+        if(timeEnd != 0 & Time.time - timeEnd > 3)
+        {
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<LoadLevel>().Load_Level(0);
+        }
     }
 }
