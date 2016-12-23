@@ -48,12 +48,22 @@ public class CountdownStart : MonoBehaviour {
     public void decrementPlayerCount()
     {
         playersLeft--;
-        if (playersLeft == 1)
+        if (playersLeft <= 1)
         {
             PauseEverything();
-            print(GameObject.FindGameObjectWithTag("Player").GetComponent<HardCodedGrapple>().PlayerNumber);
+
+            GameObject[] lastPlayer = GameObject.FindGameObjectsWithTag("Player");
+            int winNumber = 0;
+            foreach (GameObject go in lastPlayer)
+            {
+                if(go!=null)
+                {
+                    winNumber = go.GetComponent<HardCodedGrapple>().PlayerNumber;
+                }
+            }
+            print(winNumber);
             theCanvas.GetComponent<CountdownManager>().fitText();
-            theCanvas.GetComponent<CountdownManager>().SetText("<b>PLAYER " + GameObject.FindGameObjectWithTag("Player").GetComponent<HardCodedGrapple>().PlayerNumber + " HAS WON</b>");
+            theCanvas.GetComponent<CountdownManager>().SetText("<b>PLAYER " + winNumber + " HAS WON</b>");
 
             timeEnd = Time.time;
         }

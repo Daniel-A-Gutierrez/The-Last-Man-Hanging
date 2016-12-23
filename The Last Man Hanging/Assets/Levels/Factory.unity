@@ -619,6 +619,11 @@ Prefab:
       propertyPath: m_Offset.y
       value: -0.35
       objectReference: {fileID: 0}
+    - target: {fileID: 114000011721911038, guid: 85161b7bddee49d4da9be5d7f5212e9f,
+        type: 2}
+      propertyPath: controller
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85161b7bddee49d4da9be5d7f5212e9f, type: 2}
   m_IsPrefabParent: 0
@@ -981,6 +986,11 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010386076474, guid: 7de42e6884ce078498692c38c0e33199,
+        type: 2}
+      propertyPath: controller
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7de42e6884ce078498692c38c0e33199, type: 2}
@@ -1714,7 +1724,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1702484131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 2, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -1733,7 +1743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b00e7dce95ea14b9ca3bac72158608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 7
 --- !u!82 &1702484138
 AudioSource:
   m_ObjectHideFlags: 0
