@@ -18,7 +18,7 @@ public class targetFrameRateSet : MonoBehaviour {
         once++;
         if (once == 100)
         {
-            print(1 / Time.deltaTime);
+           // print(1 / Time.deltaTime);
             once = 0;
         }
 	}
