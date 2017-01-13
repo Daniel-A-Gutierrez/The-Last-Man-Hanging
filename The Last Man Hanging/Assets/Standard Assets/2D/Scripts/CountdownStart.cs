@@ -15,7 +15,7 @@ public class CountdownStart : MonoBehaviour {
         theCanvas = GameObject.Find("Canvas");
         timeStart = Time.time;
         PauseEverything();
-        playersLeft = 4;
+        playersLeft = 1; // 4 normally  but im doing this for single player mode
 	}
     void PauseEverything()
     {
@@ -63,7 +63,7 @@ public class CountdownStart : MonoBehaviour {
             }
             print(winNumber);
             theCanvas.GetComponent<CountdownManager>().fitText();
-            theCanvas.GetComponent<CountdownManager>().SetText("<b>PLAYER " + winNumber + " HAS WON</b>");
+            theCanvas.GetComponent<CountdownManager>().SetText("<b>TIME : " + Time.time + "</b>");
 
             timeEnd = Time.time;
         }

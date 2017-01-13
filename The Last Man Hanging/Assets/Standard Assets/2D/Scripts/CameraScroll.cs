@@ -10,7 +10,7 @@ public class CameraScroll : MonoBehaviour {
     GameObject[] waypoints;
     int currentWaypoint = 0;
 
-    public float speed = .5f;
+    public float speed;
 	// Use this for initialization
 	void Start () {
         waypoints = GameObject.FindGameObjectsWithTag("CameraWaypoint");
@@ -27,6 +27,7 @@ public class CameraScroll : MonoBehaviour {
     {
         Vector3 target = waypoints[currentWaypoint].transform.position;
         transform.position = Vector3.MoveTowards(transform.position, target, speed*Time.deltaTime);
+        speed += .035f * Time.deltaTime;
         if (transform.position == target)
         {
             findNextWaypoint();
