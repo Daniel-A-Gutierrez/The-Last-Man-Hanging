@@ -42,8 +42,8 @@ public class HardCodedGrapple : MonoBehaviour
     public bool CLIMBDOWN = false;
     void Start()
     {
-        lineL = transform.FindChild("lineL").GetComponent<LineRenderer>();
-        lineR = transform.FindChild("lineR").GetComponent<LineRenderer>();
+        lineL = transform.Find("lineL").GetComponent<LineRenderer>();
+        lineR = transform.Find("lineR").GetComponent<LineRenderer>();
         lineL.enabled = false;
         lineR.enabled = false;
         LMBDepressed = false;
